@@ -1,0 +1,176 @@
+%!TEX root=../document.tex
+
+\section{Konfiguration}
+\subsection{Optionen}
+\begin{tabularx}{\textwidth}{l X}
+\texttt{landscape} & Richte das Dokument vertikal aus.\\
+\texttt{minted} & Nutze das \texttt{minted} Paket zur Quelltextdarstellung.\\
+\texttt{natbib} & Nutze NatBib zur Literaturverwaltung.\\
+\texttt{nobib} & Deaktiviere die Literaturverwaltung.\\
+\texttt{nofonts} & Nutze die Standard \LaTeX ~Schriftarten.\\
+\texttt{noglo} & Deaktiviere Akronyme und das Glossar.\\
+\texttt{nologo} & Zeichne keine Logos auf der Titelseite.\\
+\texttt{notitle} & Zeichne keine Titelseite.\\
+\texttt{notoc} & Zeichne kein Inhaltsverzeichnis.\\
+\texttt{notable} & Zeichne keine Tabelle auf der Titelseite.
+\end{tabularx}
+
+\subsection{Variablen}
+\begin{tabularx}{\textwidth}{l X}
+\textbf{Kommando} & \textbf{Beispiel}\\
+
+\verb|\mysubtitle{Laborprotokoll}| & Untertitel oder Zugehörigkeit\\
+\verb|\mysubject{Systemtechnik Labor}| & Thema / Fach welches bearbeitet wird\\
+\verb|\mycourse{xHIT 2017/18, Gruppe A}| & Kurs / Klasse welche(r) besucht wird\\
+\verb|\myteacher{Michael Borko}| & Betreuende Lehrkraft\\
+\verb|\myversion{0.1}| & Aktuelle Version des Dokuments\\
+\verb|\mybegin{31.1.18}| & Datum des Beginns\\
+\verb|\myfinish{1.2.18}| & Datum an dem die Arbeit beendet wurde
+\end{tabularx}
+
+\newpage
+\section{Kommandos}\label{sec:Kommandos}
+\subsection{\texttt{makefig}}
+
+\begin{minted}{latex}
+\makefig{img/hit-logo.png}{height=2cm}{
+    Mit Beschreibung und Label  % (Optional)
+}{
+    fig:caption-label           % (Optional)
+}
+\end{minted}
+\makefig{img/hit-logo.png}{height=2cm}{Mit Beschreibung und Label}{fig:caption-label}
+
+\subsection{\texttt{vardef}}
+\mint{latex}|$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$|
+$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$
+\begin{listing}[H]
+\begin{minted}[firstnumber=last]{latex}
+\begin{vardefs}
+    \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
+    \addvardef{$x$}{Zufallsvariable}
+    \addvardef{$\mu$}{Erwartungswert}
+    \addvardef{$\sigma$}{Standardabweichung}
+\end{vardefs}
+\end{minted}
+\caption{\texttt{vardef}}
+\label{lst:vardef}
+\end{listing}
+
+\begin{vardefs}
+    \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
+    \addvardef{$x$}{Zufallsvariable}
+    \addvardef{$\mu$}{Erwartungswert}
+    \addvardef{$\sigma$}{Standardabweichung}
+\end{vardefs}
+
+\newpage
+\section{Anwendung}\label{sec:Anwendung}
+Hier sollen die Schritte der Laborübung erläutert werden. Alle Fragestellungen der Lehrkraft müssen hier beantwortet werden. Etwaige Probleme bzw. Schwierigkeiten sollten ebenfalls hier angeführt werden.
+
+In diesem Fall werden einige \LaTeX-Elemente dokumentiert, welche bei der Kreation von Protokollen behilflich sein könnten.
+
+\subsection{Tabellen}
+\begin{table}[H]
+	\center
+	\begin{tabular}{| c | l |}
+		\hline Header & Kopf\\ \hline\hline
+		\textbf{Lorem} & Ipsum dolor sit amet, consetetur sadipscing elitr\\ \hline
+		\textbf{Ipsum} & At vero eos et accusam et justo duo dolores et ea rebum.\\
+			& Stet clita kasd gubergren, no sea takimata sanctus\\ \hline
+		\textbf{Dolor} & Consetetur sadipscing elitr, sed diam nonumy\\\hline
+	\end{tabular}
+	\caption{Tabular}
+	\label{tab:tabular}
+\end{table}
+
+\subsubsection{TabularX}
+TabularX erlaubt die Angabe der Größe der Tabelle und bietet zudem den Reihentyp \texttt{X}, der die verbleibende Größe neben anderen Reihen mit anderen \texttt{X} Reihen teilt.
+\begin{table}[H]
+    \center
+    \begin{tabularx}{\textwidth}{| c | X |}
+        \hline Header & Kopf\\ \hline\hline
+        \textbf{Lorem} & Ipsum dolor sit amet, consetetur sadipscing elitr\\ \hline
+        \textbf{Ipsum} & At vero eos et accusam et justo duo dolores et ea rebum.\\
+            & Stet clita kasd gubergren, no sea takimata sanctus\\ \hline
+        \textbf{Dolor} & Consetetur sadipscing elitr, sed diam nonumy\\\hline
+    \end{tabularx}
+    \caption{TabularX}
+    \label{tab:tabularx}
+\end{table}
+
+\subsection{Aufzählung}
+\begin{itemize}
+	\item Element einer Aufzählung
+	\begin{itemize}
+        \item Erstes eingerücktes Element einer Aufzählung
+        \item Zweites eingerücktes Element einer Aufzählung
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Outlines}
+\begin{outline}
+    \1 Element einer Aufzählung
+        \2 Erstes eingerücktes Element einer Aufzählung
+        \2 Zweites eingerücktes Element einer Aufzählung
+\end{outline}
+
+\newpage
+\subsection{Glossar}
+Zur Verwaltung des Glossars wird standardmäßig die Datei \texttt{glo.tex} verwendet, wobei sowohl Definitionen als auch Akronyme definiert werden können.
+\\\\
+Als Beispiel wurde ein Akronym für \gls{ac-syt} und eine Definition zu \gls{ac-syt} selbst hinzugefügt.
+
+\inputminted{latex}{glo.tex}
+
+Im Dokument selbst kann ein Akronym mittels \mintinline{latex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
+\\\\
+Mit \mintinline{latex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
+
+\subsection{Zitate}
+Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
+
+\newpage
+\subsection{Quelltext}
+\subsubsection{Listings}
+\begin{listing}[H]
+\begin{lstlisting}[style=Java, caption=Java Listing]
+public static void main(String[] args) {
+    System.out.println("Ich bin ein Array!")
+}
+\end{lstlisting}
+\end{listing}
+
+\subsubsection{Minted}
+Benötigt die Option \texttt{minted}.
+\paragraph{Umgebung}~\\
+\begin{listing}[H]
+\mint{latex}|\begin{minted}{latex}|
+\begin{minted}[firstnumber=last]{java}
+    public static void main(String[] args) {
+        System.out.println("Ich bin ein Array!")
+    }
+\end{minted}
+\mint[firstnumber=last]{latex}|\end{minted}|
+\caption{Minted Umgebung}
+\label{lst:minted-env}
+\end{listing}
+
+\paragraph{Zeile}~\\
+\begin{listing}[H]
+\begin{minted}{latex}
+\mint{latex}|...|
+\end{minted}
+\caption{Minted Inline}
+\label{lst:minted-inline}
+\end{listing}
+
+\begin{listing}[H]
+\begin{minted}{java}
+public static void main(String[] args) {
+    System.out.println("Ich bin ein Array!")
+}
+\end{minted}
+\caption{Java Minted}
+\label{lst:minted-java}
+\end{listing}

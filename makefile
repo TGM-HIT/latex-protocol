@@ -1,0 +1,126 @@
+# colors
+eR = \e[0m
+ecB = \e[0;30m
+ecR = \e[0;31m
+ecG = \e[0;32m
+ecO = \e[0;33m
+ecP = \e[0;35m
+ecC = \e[0;36m
+# constants
+BUILD = .build
+
+default:
+	@echo -e "$(ecG)Decide $(eR)on a target"
+ifdef f
+	$(MAKE) file
+else
+	@echo -e "$(ecG)Run $(ecC)all $(eR)on $(ecP). $(eR)by default"
+	$(MAKE) all
+endif
+
+
+pdf:
+	@echo -e "$(ecG)Make $(ecC)pdf$(eR) for $(ecP)$(f)$(eR)"
+	@mkdir -p .build/
+	@pdflatex -shell-escape -file-line-error -interaction=batchmode -output-directory=$(BUILD) $(f) || echo -e "$(ecR)Error running $(ecC)pdflatex$(ecR)!$(eR)"
+	@grep ".*:[0-9]*:.*" $(BUILD)/$(f).log -A1 && { false; } || { echo -e "$(ecG)Everything OK!$(eR)"; }
+
+
+glossaries:
+	@echo -e "$(ecG)Make $(ecC)glossaries$(eR) for $(ecP)$(f)$(eR)"
+ifndef f
+	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined. $(eR)Try adding $(ecP)f=filename!$(eR)"; false
+endif
+	@makeglossaries -d $(BUILD) $(f)
+
+
+glo:
+	@echo -e "$(ecG)Run $(eR)target $(ecC)glo $(eR)on $(ecP)$(f)$(eR)"
+ifndef f
+	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined.$(eR) Try adding $(ecP)f=filename!$(eR)"; false
+endif
+ifeq (,find $(BUILD)/$(f).glo)
+	@echo -e "$(ecO)Skip $(ecC)makeglossaries $(eR)due to missing glossary file"; false
+endif
+	@echo -e "$(ecC)First$(eR) run for simple compilation"
+	@$(MAKE) pdf
+	@$(MAKE) glossaries
+	@echo -e "$(ecC)First$(eR) progressive run for $(ecC)makeglossaries$(eR)"
+	@$(MAKE) pdf
+
+	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
+	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
+
+	@$(MAKE) clean
+
+
+bibtex:
+	@echo -e "$(ecG)Copy $(ecP)bib$(eR) file to $(ecP)$(BUILD)$(eR) and $(ecG)run $(ecC)bibtex$(eR)"
+ifndef f
+	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined. $(eR)Try adding $(ecP)f=filename!$(eR)"; false
+endif
+	@cp *.bib $(BUILD) || { echo -e "$(ecR)No bib file in directory$(eR)"; false; }
+	@-cd $(BUILD); bibtex $(f)
+
+
+bib:
+	@echo -e "$(ecG)Run $(eR)target $(ecC)bib $(eR)on $(ecP)$(f)$(eR)"
+ifndef f
+	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined. $(eR)Try adding $(ecP)f=filename!$(eR)"; false
+endif
+ifeq (,find *.bib)
+	@echo -e "$(ecO)Skip $(ecC)bibtex $(eR)due to missing bib file"; false
+endif
+	@echo -e "$(ecC)First$(eR) run for simple compilation"
+	@$(MAKE) pdf
+	$(MAKE) bibtex
+	@echo -e "$(ecC)First$(eR) progressive run for $(ecC)bibtex$(eR)"
+	@$(MAKE) pdf
+	@echo -e "$(ecC)Second$(eR) progressive run for $(ecC)bibtex$(eR)"
+	@$(MAKE) pdf
+	
+	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
+	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
+
+	@$(MAKE) clean
+
+
+file:
+	@echo -e "$(ecG)Run $(eR)target $(ecC)file $(eR)on $(ecP)$(f)$(eR)"
+ifndef f
+	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined. $(eR)Try adding $(ecP)f=filename!$(eR)"
+	@false
+endif
+	@echo -e "$(ecG)Build $(ecP)$(f) $(eR)into $(ecP)$(BUILD)$(eR)"
+	@echo -e "$(ecC)First$(eR) run for simple compilation"
+	@$(MAKE) pdf
+ifneq (,find $(BUILD)/$(f).glo)
+	@$(MAKE) glossaries
+	@echo -e "$(ecC)First$(eR) progressive run for $(ecC)makeglossaries$(eR)"
+	@$(MAKE) pdf
+endif
+ifneq (,find *.bib)
+	$(MAKE) bibtex
+	@echo -e "$(ecC)First$(eR) progressive run for $(ecC)bibtex$(eR)"
+	$(MAKE) pdf
+	@echo -e "$(ecC)Second$(eR) progressive run for $(ecC)bibtex$(eR)"
+	$(MAKE) pdf
+endif
+	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
+	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
+
+	@$(MAKE) clean
+
+
+FILES = $(filter-out $(wildcard glo*.tex _*.tex), $(wildcard *.tex))
+all:
+	@echo -e "$(ecG)Run $(eR)target $(ecC)all $(eR)on $(ecP).$(eR)"
+	@echo -e "$(ecG)Found $(ecP)$(FILES)$(eR)" && $(foreach x, $(FILES), $(MAKE) file f="$(notdir $(basename $(x)))";)
+
+
+.PHONY: clean
+clean:
+	@echo -e "$(ecG)Clean$(eR) up directory"
+	rm -rf $(BUILD)
+	rm -f *.acn *.acr *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
+	rm -rf _minted*
