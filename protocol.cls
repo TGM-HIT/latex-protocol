@@ -62,7 +62,6 @@
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
-
 \RequirePackage[ngerman]{babel}
 \RequirePackage{ccicons, csquotes}
 \RequirePackage{amssymb, mathtools}
@@ -74,9 +73,16 @@
 \RequirePackage{pageslts}
 \RequirePackage{outlines, enumitem}
 \RequirePackage{booktabs, tabularx}
-\RequirePackage{graphicx, caption, subcaption}
-\RequirePackage{listings}
+\RequirePackage{listings} % Required by totalcount also without minted
+\RequirePackage{graphicx, subcaption}
+\RequirePackage[font=small]{caption}
+\RequirePackage{accsupp} % [1]
+
+% ## Count list items for lists
 \RequirePackage[figure,table,lstlisting]{totalcount}
+% Update listing numbers when using minted
+\AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
+\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
 
 % ## Glossaries
 \ifglo\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}\fi
@@ -98,6 +104,17 @@
         breaklines=true,
         framesep=12pt,
         tabsize=4}
+    % ## [1] Avoid copying line numbers on listings
+    \renewcommand\theFancyVerbLine{
+        \BeginAccSupp{method=escape,ActualText={}}
+        {\rmfamily\tiny\arabic{FancyVerbLine}}
+        \EndAccSupp{}
+    }
+\else
+    \RequirePackage{listing} % Already defined by minted itself
+    \RequirePackage{listingsutf8} % UTF-8 Input support for listings
+    % Load lstlistings config if exists
+    \IfFileExists{lst/lst.tex}{\input{lst/lst}}{}
 \fi
 
 % #Variables
@@ -140,15 +157,6 @@
 
 % ## Hyperlinks
 \hypersetup{colorlinks=true, linkcolor=MidnightBlue, urlcolor=MidnightBlue, citecolor=MidnightBlue}
-
-% ## Listings
-% Load lstlistings config if exists
-\IfFileExists{lst/lst.tex}{\input{lst/lst}}{}
-\ifminted
-    % Update listing numbers when using minted
-    \AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
-    \AtEndEnvironment{listing}{\stepcounter{lstlisting}}
-\fi
 
 % ## Glossaries
 % Add glossary entries if they exist
@@ -207,7 +215,7 @@
 % ## Basic centered figure
 % \makefig{path}{width}{caption}{label}
 \newcommand\makefig[4]{
-    \begin{figure}[!h]
+    \begin{figure}[H]
         \centering
         \includegraphics[#2]{#1}
         \ifx\relax#3\relax
@@ -226,6 +234,44 @@
     {#1} & \dots & {#2}\\
 }
 
+
+% ## Code environments
+% Extra % is used as a linefix for the code interpreter
+\ifminted   % Minted goes here
+    % Code settings
+    \newcommand\setcode[1]{\setminted{#1}}
+    % Code environment
+    \newenvironment{code}[2][]{
+        \VerbatimEnvironment%
+        \begin{minted}[#1]{#2}%
+    }{  \end{minted}%
+    }
+    % Inline code
+    \newcommand\codeinline[3][]{\mintinline[#1]{#2}{#3}}
+    % One-line code
+    \newcommand\codeline[3][]{\mint[#1]{#2}|#3|}
+    % Input code
+    \newcommand\inputcode[3][]{\inputminted[#1]{#2}{#3}}
+\else   % Listings goes here
+    % Code settings
+    \newcommand\setcode[1]{\lstset{#1}}
+    % Code environment
+    \lstnewenvironment{code}[1]{
+        \renewcommand\lstlistingname{Case}%
+        \lstset{language={#1}}%
+    }{}
+    % Inline code
+    \newcommand\codeinline{[3][]{\lstinline[language=#2,#1]{#3}}}
+    % One-line code
+    \newcommand\codeline[3][]{
+        \begin{lstlisting}[language=#2,#1]
+            #3
+        \end{lstlisting}
+    }
+    % Input code
+    \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{#3}}
+\fi
+
 % ## Add common commands at the beginning of the document
 \AtBeginDocument{
     \pagenumbering{arabic} % Required by pageslts
@@ -235,9 +281,7 @@
         \thispagestyle{empty}
     \fi
     % Version table
-    \iftable
-        \maketable
-    \fi
+    \iftable\maketable\fi
 
     % Table of contents
     \iftoc

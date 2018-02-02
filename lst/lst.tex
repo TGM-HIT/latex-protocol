@@ -5,45 +5,50 @@
 \definecolor{darkblue}{rgb}{0.0,0.0,0.6}
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
+% ## Avoid copying line numbers on listings
+%\providecommand{\noncopynumber}[1]{
+%	\BeginAccSupp{method=escape,ActualText={}}#1\EndAccSupp{}
+%}
+
 % Java Syntaxhighligthning
-% strings
-\definecolor{javared}{rgb}{0.6,0,0}
-% comments
-\definecolor{javagreen}{rgb}{0.25,0.5,0.35}
-% keywords
-\definecolor{javapurple}{rgb}{0.5,0,0.35}
-% javadoc
-\definecolor{javadocblue}{rgb}{0.25,0.35,0.75}
+\definecolor{javared}{rgb}{0.6,0,0}				% strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35}		% comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35}		% keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75}	% javadoc
 
 \lstset{
+	extendedchars=true,
+	literate={á}{{\'a}}1 {ã}{{\~a}}1 {é}{{\'e}}1,
+	texcl=true,
 	keywordstyle=\bfseries\color[rgb]{0.496,0.000,0.332},
 	commentstyle=\color[rgb]{0.246,0.496,0.371},
 	stringstyle=\color[rgb]{0.164,0.000,0.996},
 	tabsize=4,
 	breaklines=true,
 	numbers=left,
-	literate={-}{{-}}{1},
-	% http://tex.stackexchange.com/questions/145416/how-to-have-straight-single-quotes-in-lstlistings
-	upquote=true;
+	upquote=true;	% Straight single quotes
 	% http://tex.stackexchange.com/questions/122256/only-select-code-without-line-numbers
 	numberstyle=\tiny\color{black}\noncopynumber,
 	stepnumber=2,
 	captionpos=b,
 	showspaces=false,
 	showstringspaces=false,
-	basicstyle=\tt\footnotesize,
+	basicstyle=\ttfamily\small,
 }
 
-\lstdefinestyle{Java}{
-	language=Java,
+
+% ## Java
+\lstdefinestyle{java}{
+	language=java,
 	keywordstyle=\color{javapurple}\bfseries,
 	stringstyle=\color{javared},
 	commentstyle=\color{javagreen},
 	morecomment=[s][\color{javadocblue}]{/**}{*/},
 }
 
-\lstdefinelanguage{XML}
-{
+
+% ## XML
+\lstdefinelanguage{xml}{
 	morestring=[b]",
 	morestring=[s]{>}{<},
 	morecomment=[s]{<?}{?>},
@@ -54,32 +59,20 @@
 	morekeywords={xmlns,version,type}
 }
 
-\lstdefinestyle{XML}{
-	language=XML,
-	basicstyle=\ttfamily\small,
+\lstdefinestyle{xml}{
+	language=xml,
 	columns=fullflexible,
 	commentstyle=\color{gray}\upshape
 }
 
-\newcommand{\noncopynumber}[1]{
-	\BeginAccSupp{method=escape,ActualText={}}
-	#1
-	\EndAccSupp{}
-}
+
+% ## Bash
 \lstdefinestyle{bash}{
 	language=bash,
-	basicstyle=\ttfamily\small,
-	literate={-}{{-}}{1},
-	% http://tex.stackexchange.com/questions/145416/how-to-have-straight-single-quotes-in-lstlistings
-	upquote=true;
-	showstringspaces=false,
-	%numbers=none,
-	% http://tex.stackexchange.com/questions/122256/only-select-code-without-line-numbers
-	numberstyle=\tiny\noncopynumber,
-	breaklines=false,
 	columns=fullflexible,
 	basicstyle=\scriptsize
 }
+
 
 % ## JSON
 % http://tex.stackexchange.com/questions/83085/how-to-improve-listings-display-of-json-files
@@ -88,13 +81,8 @@
 \definecolor{delim}{RGB}{20,105,176}
 \colorlet{numb}{magenta!60!black}
 \lstdefinelanguage{json}{
-	basicstyle=\ttfamily\small,
-	numbers=left,
-	numberstyle=\scriptsize,
 	stepnumber=2,
 	numbersep=8pt,
-	showstringspaces=false,
-	breaklines=true,
 	literate=
 	*{0}{{{\color{numb}0}}}{1}
 	{1}{{{\color{numb}1}}}{1}
@@ -112,5 +100,4 @@
 	{\}}{{{\color{delim}{\}}}}}{1}
 	{[}{{{\color{delim}{[}}}}{1}
 	{]}{{{\color{delim}{]}}}}{1},
-	basicstyle=\scriptsize
 }

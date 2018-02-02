@@ -19,40 +19,40 @@
 \begin{tabularx}{\textwidth}{l X}
 \textbf{Kommando} & \textbf{Beispiel}\\
 
-\verb|\mysubtitle{Laborprotokoll}| & Untertitel oder Zugehörigkeit\\
-\verb|\mysubject{Systemtechnik Labor}| & Thema / Fach welches bearbeitet wird\\
-\verb|\mycourse{xHIT 2017/18, Gruppe A}| & Kurs / Klasse welche(r) besucht wird\\
-\verb|\myteacher{Michael Borko}| & Betreuende Lehrkraft\\
-\verb|\myversion{0.1}| & Aktuelle Version des Dokuments\\
-\verb|\mybegin{31.1.18}| & Datum des Beginns\\
-\verb|\myfinish{1.2.18}| & Datum an dem die Arbeit beendet wurde
+\codeinline{tex}{\mysubtitle{Laborprotokoll}} & Untertitel oder Zugehörigkeit\\
+\codeinline{tex}{\mysubject{Systemtechnik Labor}} & Thema / Fach welches bearbeitet wird\\
+\codeinline{tex}{\mycourse{xHIT 2017/18, Gruppe A}} & Kurs / Klasse welche(r) besucht wird\\
+\codeinline{tex}{\myteacher{Michael Borko}} & Betreuende Lehrkraft\\
+\codeinline{tex}{\myversion{0.1}} & Aktuelle Version des Dokuments\\
+\codeinline{tex}{\mybegin{31.1.18}} & Datum des Beginns\\
+\codeinline{tex}{\myfinish{1.2.18}} & Datum an dem die Arbeit beendet wurde
 \end{tabularx}
 
 \newpage
 \section{Kommandos}\label{sec:Kommandos}
 \subsection{\texttt{makefig}}
 
-\begin{minted}{latex}
+\begin{code}{tex}
 \makefig{img/hit-logo.png}{height=2cm}{
     Mit Beschreibung und Label  % (Optional)
 }{
     fig:caption-label           % (Optional)
 }
-\end{minted}
+\end{code}
 \makefig{img/hit-logo.png}{height=2cm}{Mit Beschreibung und Label}{fig:caption-label}
 
 \subsection{\texttt{vardef}}
-\mint{latex}|$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$|
+\codeline{tex}{$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$}
 $$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$
 \begin{listing}[H]
-\begin{minted}[firstnumber=last]{latex}
+\begin{code}[firstnumber=last]{tex}
 \begin{vardefs}
     \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
     \addvardef{$x$}{Zufallsvariable}
     \addvardef{$\mu$}{Erwartungswert}
     \addvardef{$\sigma$}{Standardabweichung}
 \end{vardefs}
-\end{minted}
+\end{code}
 \caption{\texttt{vardef}}
 \label{lst:vardef}
 \end{listing}
@@ -121,56 +121,70 @@ Zur Verwaltung des Glossars wird standardmäßig die Datei \texttt{glo.tex} verw
 \\\\
 Als Beispiel wurde ein Akronym für \gls{ac-syt} und eine Definition zu \gls{ac-syt} selbst hinzugefügt.
 
-\inputminted{latex}{glo.tex}
+\inputcode{tex}{glo.tex}
 
-Im Dokument selbst kann ein Akronym mittels \mintinline{latex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
+Im Dokument selbst kann ein Akronym mittels \codeinline{tex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
 \\\\
-Mit \mintinline{latex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
+Mit \codeinline{tex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
 
 \subsection{Zitate}
 Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 
 \newpage
 \subsection{Quelltext}
-\subsubsection{Listings}
 \begin{listing}[H]
-\begin{lstlisting}[style=Java, caption=Java Listing]
+\begin{code}{java}
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
-\end{lstlisting}
+\end{code}
+\end{listing}
+
+Auch die Darstellung von Quelltext innerhalb eines Textes ist über \codeinline{tex}{\codeinline{tex}} möglich.
+
+\codeline{tex}{\codeline{tex}}
+
+\subsubsection{Listings}
+\begin{listing}[H]
+\codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Listing]}
+\begin{code}{tex}
+    public static void main(String[] args) {
+        System.out.println("Ich bin ein Array!")
+    }
+\end{code}
+\codeline[firstnumber=last]{tex}{\end{lstlisting}}
 \end{listing}
 
 \subsubsection{Minted}
 Benötigt die Option \texttt{minted}.
 \paragraph{Umgebung}~\\
 \begin{listing}[H]
-\mint{latex}|\begin{minted}{latex}|
-\begin{minted}[firstnumber=last]{java}
+\codeline{tex}{\begin{minted}{tex}}
+\begin{code}[firstnumber=last]{java}
     public static void main(String[] args) {
         System.out.println("Ich bin ein Array!")
     }
-\end{minted}
-\mint[firstnumber=last]{latex}|\end{minted}|
+\end{code}
+\codeline[firstnumber=last]{tex}{\end{minted}}
 \caption{Minted Umgebung}
 \label{lst:minted-env}
 \end{listing}
 
 \paragraph{Zeile}~\\
 \begin{listing}[H]
-\begin{minted}{latex}
-\mint{latex}|...|
-\end{minted}
+\begin{code}{tex}
+\mint{tex}|...|
+\end{code}
 \caption{Minted Inline}
 \label{lst:minted-inline}
 \end{listing}
 
 \begin{listing}[H]
-\begin{minted}{java}
+\begin{code}{java}
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
-\end{minted}
+\end{code}
 \caption{Java Minted}
 \label{lst:minted-java}
 \end{listing}
