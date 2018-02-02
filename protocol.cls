@@ -1,4 +1,4 @@
-\ProvidesClass{prot}
+\ProvidesClass{protocol}
 
 % # Options
 % ## Use landscape orientation
