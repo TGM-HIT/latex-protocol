@@ -41,10 +41,6 @@
 \newif\ifnatbib\natbibfalse
 \DeclareOption{natbib}{\bibtrue\natbibtrue}
 
-% ## Use minted package
-\newif\ifsharelatex\sharelatexfalse
-\DeclareOption{sharelatex}{\sharelatextrue}
-
 % # Pass options
 % \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions \relax
@@ -93,8 +89,7 @@
 
 % ## Require and configure minted
 \ifminted
-    \ifsharelatex\RequirePackage[newfloat]{minted} % No outputdir when using sharelatex
-    \else\RequirePackage[newfloat, outputdir=./.build]{minted}\fi
+    \RequirePackage[newfloat]{minted}
     \usemintedstyle{rainbow_dash}
     \setminted{
         fontsize=\footnotesize,

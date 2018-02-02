@@ -7,7 +7,7 @@ ecO = \e[0;33m
 ecP = \e[0;35m
 ecC = \e[0;36m
 # constants
-BUILD = .build
+BUILD = .
 
 default:
 	@echo -e "$(ecG)Decide $(eR)on a target"
@@ -21,7 +21,9 @@ endif
 
 pdf:
 	@echo -e "$(ecG)Make $(ecC)pdf$(eR) for $(ecP)$(f)$(eR)"
-	@mkdir -p .build/
+ifneq (.,$(BUILD))
+	@mkdir -p $(BUILD)
+endif
 	@pdflatex -shell-escape -file-line-error -interaction=batchmode -output-directory=$(BUILD) $(f) || echo -e "$(ecR)Error running $(ecC)pdflatex$(ecR)!$(eR)"
 	@grep ".*:[0-9]*:.*" $(BUILD)/$(f).log -A1 && { false; } || { echo -e "$(ecG)Everything OK!$(eR)"; }
 
@@ -48,18 +50,17 @@ endif
 	@echo -e "$(ecC)First$(eR) progressive run for $(ecC)makeglossaries$(eR)"
 	@$(MAKE) pdf
 
-	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
-	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
-
 	@$(MAKE) clean
 
 
 bibtex:
-	@echo -e "$(ecG)Copy $(ecP)bib$(eR) file to $(ecP)$(BUILD)$(eR) and $(ecG)run $(ecC)bibtex$(eR)"
+	@echo -e "$(ecG)Run $(ecC)bibtex$(eR) on $(ecP)bib$(eR) file at $(ecP)$(BUILD)$(eR)"
 ifndef f
 	@echo -e "$(ecR)No file $(eCP)f $(eCR)defined. $(eR)Try adding $(ecP)f=filename!$(eR)"; false
 endif
+ifneq (.,$(BUILD))
 	@cp *.bib $(BUILD) || { echo -e "$(ecR)No bib file in directory$(eR)"; false; }
+endif
 	@-cd $(BUILD); bibtex $(f)
 
 
@@ -78,9 +79,6 @@ endif
 	@$(MAKE) pdf
 	@echo -e "$(ecC)Second$(eR) progressive run for $(ecC)bibtex$(eR)"
 	@$(MAKE) pdf
-	
-	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
-	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
 
 	@$(MAKE) clean
 
@@ -106,9 +104,6 @@ ifneq (,find *.bib)
 	@echo -e "$(ecC)Second$(eR) progressive run for $(ecC)bibtex$(eR)"
 	$(MAKE) pdf
 endif
-	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
-	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
-
 	@$(MAKE) clean
 
 
@@ -121,6 +116,10 @@ all:
 .PHONY: clean
 clean:
 	@echo -e "$(ecG)Clean$(eR) up directory"
+ifneq (.,$(BUILD))
+	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
+	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
 	rm -rf $(BUILD)
-	rm -f *.acn *.acr *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
+endif	
+	rm -f *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
 	rm -rf _minted*
