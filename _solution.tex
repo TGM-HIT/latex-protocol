@@ -3,16 +3,16 @@
 \section{Konfiguration}
 \subsection{Optionen}
 \begin{tabularx}{\textwidth}{l X}
-\verb|landscape| & Richte das Dokument vertikal aus.\\
-\verb|minted| & Nutze das \texttt{minted} Paket zur Quelltextdarstellung.\\
-\verb|natbib| & Nutze NatBib zur Literaturverwaltung.\\
-\verb|nobib| & Deaktiviere die Literaturverwaltung.\\
-\verb|nofonts| & Nutze die Standard \LaTeX ~Schriftarten.\\
-\verb|noglo| & Deaktiviere Akronyme und das Glossar.\\
-\verb|nologo| & Zeichne keine Logos auf der Titelseite.\\
-\verb|notitle| & Zeichne keine Titelseite.\\
-\verb|notoc| & Zeichne kein Inhaltsverzeichnis.\\
-\verb|notable| & Zeichne keine Tabelle auf der Titelseite.
+{\small \verb|landscape|}    & Richte das Dokument vertikal aus.\\
+{\small \verb|minted|}       & Nutze das \texttt{minted} Paket zur Quelltextdarstellung.\\
+{\small \verb|natbib|}       & Nutze NatBib zur Literaturverwaltung.\\
+{\small \verb|nobib|}        & Deaktiviere die Literaturverwaltung.\\
+{\small \verb|nofonts|}      & Nutze die Standard \LaTeX ~Schriftarten.\\
+{\small \verb|noglo|}        & Deaktiviere Akronyme und das Glossar.\\
+{\small \verb|nologo|}       & Zeichne keine Logos auf der Titelseite.\\
+{\small \verb|notitle|}      & Zeichne keine Titelseite.\\
+{\small \verb|notoc|}        & Zeichne kein Inhaltsverzeichnis.\\
+{\small \verb|notable|}      & Zeichne keine Tabelle auf der Titelseite.
 \end{tabularx}
 
 \subsection{Variablen}
@@ -46,23 +46,23 @@
 $$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$
 \begin{listing}[H]
 \begin{code}[firstnumber=last]{tex}
-\begin{vardefs}
+\begin{vardef}
     \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
     \addvardef{$x$}{Zufallsvariable}
     \addvardef{$\mu$}{Erwartungswert}
     \addvardef{$\sigma$}{Standardabweichung}
-\end{vardefs}
+\end{vardef}
 \end{code}
 \caption{\texttt{vardef}}
 \label{lst:vardef}
 \end{listing}
 
-\begin{vardefs}
+\begin{vardef}
     \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
     \addvardef{$x$}{Zufallsvariable}
     \addvardef{$\mu$}{Erwartungswert}
     \addvardef{$\sigma$}{Standardabweichung}
-\end{vardefs}
+\end{vardef}
 
 \newpage
 \section{Anwendung}\label{sec:Anwendung}

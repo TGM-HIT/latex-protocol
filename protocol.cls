@@ -100,7 +100,7 @@
     \RequirePackage[newfloat]{minted}
     \usemintedstyle{tango} % rainbow_dash
     \setminted{
-        fontsize=\footnotesize,
+        fontsize=\small,
         linenos=true,
         breakanywhere=true,
         breaklines=true,
@@ -113,10 +113,9 @@
         \EndAccSupp{}
     }
 \else
-    \RequirePackage{listing}        % Already defined by minted itself
-    \RequirePackage{listingsutf8}   % UTF-8 Input support for listings
-    % Load lstlistings config if exists
-    \IfFileExists{lst.tex}{\input{lst}}{}
+    \RequirePackage{listing}                % Already defined by minted itself
+    \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
+    \IfFileExists{lst.tex}{\input{lst}}{}   % Load lstlistings config if exists
 \fi
 
 % # Variables
@@ -140,7 +139,7 @@
 \def\arraystretch{1.5}
 \renewcommand{\thefootnote}{\Roman{footnote}}
 
-% ## Tabularx
+% ## TabularX
 \newcolumntype{Y}{p{.5\textwidth}}
 
 % ## Header
@@ -172,8 +171,8 @@
         \IfFileExists{img/tgm-logo.png}{\includegraphics[height=2cm]{img/tgm-logo.png}}{}\hfill
         \IfFileExists{img/hit-logo.png}{\includegraphics[height=2cm]{img/hit-logo.png}}{}\fi
 
-    \vskip 1cm          % Minimum margin
-    \iflandscape\else   % Do not increase margin on landscape
+    \vskip 1cm              % Minimum margin
+    \iflandscape\else       % Do not increase margin on landscape
         \iftable\vskip 3cm  % + table margin
         \else\vskip 1cm\fi  % + default margin
     \fi
@@ -220,7 +219,7 @@
 }
 
 % ## Math variable declaration
-\newenvironment{vardefs}{
+\newenvironment{vardef}{
 	\center \small
 	\begin{tabular}{l l l}
 }{\end{tabular} \normalsize \endcenter}
@@ -242,21 +241,21 @@
     % Inline code
     \newcommand\codein{\mintinline} %\newcommand\codein[3][]{\mintinline[#1]{#2}{#3}}
     % One-line code
-    \newcommand\codeline[3][]{\mint[#1]{#2}|#3|}
+    \newcommand\codeline[3][]{\mint[#1]{#2}\relax#3\relax}
     % Input code
     \newcommand\inputcode[3][]{\inputminted[#1]{#2}{#3}}
-\else   % Listings goes here
+\else       % Listings goes here
     % Code settings
     \newcommand\setcode[1]{\lstset{#1}}
     % Code environment
     \lstnewenvironment{code}[1]{\lstset{language={#1}}}{}
     % Inline code
-    \newcommand\codein[3][]{\lstinline[language=#2,#1]$#3$}
+    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}
     % One-line code
     \newcommand\codeline[3][]{
-        \begin{code}[language=#2,#1]%
-            #3%
-        \end{code}%
+        \begin{flushleft}
+            \lstinline[language=#2,#1]\relax#3\relax
+        \end{flushleft}
     }
     % Input code
     \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{#3}}
@@ -272,7 +271,6 @@
 
 % ## Add common commands at the end of the document
 \AtEndDocument{
-    
     \ifglo  % Print glossaries
         % \glsaddall                % Also list unused glossary entries
         \printglossaries\fi         % List used glossary entries
