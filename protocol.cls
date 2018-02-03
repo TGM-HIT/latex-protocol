@@ -192,14 +192,13 @@
 % ## Table after titlepage
 \makeatletter
 \newcommand\maketable{
-    \vspace*{\fill}~\\
-    \begin{minipage}{0.5\textwidth}
-        ~\\\\
-        Note: \vspace{0.5em}\\
+    \vfill~\\
+    \begin{minipage}[t]{0.5\textwidth}
+        Bewertung: \vspace{0.5em}\\
         Betreuer: \@myteacher
     \end{minipage}
     \hfill
-    \begin{minipage}{0.3\textwidth}
+    \begin{minipage}[t]{0.3\textwidth}
         \if\relax\@myversion\relax\else Version:\hfill\@myversion   \vspace{0.5em}\\\fi
         \if\relax\@mybegin\relax\else   Begonnen:\hfill\@mybegin    \vspace{0.5em}\\\fi
         \if\relax\@myfinish\relax\else  Beendet:\hfill\@myfinish    \fi
