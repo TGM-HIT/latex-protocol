@@ -3,30 +3,30 @@
 \section{Konfiguration}
 \subsection{Optionen}
 \begin{tabularx}{\textwidth}{l X}
-\texttt{landscape} & Richte das Dokument vertikal aus.\\
-\texttt{minted} & Nutze das \texttt{minted} Paket zur Quelltextdarstellung.\\
-\texttt{natbib} & Nutze NatBib zur Literaturverwaltung.\\
-\texttt{nobib} & Deaktiviere die Literaturverwaltung.\\
-\texttt{nofonts} & Nutze die Standard \LaTeX ~Schriftarten.\\
-\texttt{noglo} & Deaktiviere Akronyme und das Glossar.\\
-\texttt{nologo} & Zeichne keine Logos auf der Titelseite.\\
-\texttt{notitle} & Zeichne keine Titelseite.\\
-\texttt{notoc} & Zeichne kein Inhaltsverzeichnis.\\
-\texttt{notable} & Zeichne keine Tabelle auf der Titelseite.
+\verb|landscape| & Richte das Dokument vertikal aus.\\
+\verb|minted| & Nutze das \texttt{minted} Paket zur Quelltextdarstellung.\\
+\verb|natbib| & Nutze NatBib zur Literaturverwaltung.\\
+\verb|nobib| & Deaktiviere die Literaturverwaltung.\\
+\verb|nofonts| & Nutze die Standard \LaTeX ~Schriftarten.\\
+\verb|noglo| & Deaktiviere Akronyme und das Glossar.\\
+\verb|nologo| & Zeichne keine Logos auf der Titelseite.\\
+\verb|notitle| & Zeichne keine Titelseite.\\
+\verb|notoc| & Zeichne kein Inhaltsverzeichnis.\\
+\verb|notable| & Zeichne keine Tabelle auf der Titelseite.
 \end{tabularx}
 
 \subsection{Variablen}
-\begin{tabularx}{\textwidth}{l X}
+\begin{tabular}{l l}
 \textbf{Kommando} & \textbf{Beispiel}\\
 
-\codeinline{tex}{\mysubtitle{Laborprotokoll}} & Untertitel oder Zugehörigkeit\\
-\codeinline{tex}{\mysubject{Systemtechnik Labor}} & Thema / Fach welches bearbeitet wird\\
-\codeinline{tex}{\mycourse{xHIT 2017/18, Gruppe A}} & Kurs / Klasse welche(r) besucht wird\\
-\codeinline{tex}{\myteacher{Michael Borko}} & Betreuende Lehrkraft\\
-\codeinline{tex}{\myversion{0.1}} & Aktuelle Version des Dokuments\\
-\codeinline{tex}{\mybegin{31.1.18}} & Datum des Beginns\\
-\codeinline{tex}{\myfinish{1.2.18}} & Datum an dem die Arbeit beendet wurde
-\end{tabularx}
+\codein{tex}{\mysubtitle{Laborprotokoll}} & Untertitel oder Zugehörigkeit\\
+\codein{tex}{\mysubject{Systemtechnik Labor}} & Thema / Fach welches bearbeitet wird\\
+\codein{tex}{\mycourse{xHIT 2017/18, Gruppe A}} & Kurs / Klasse welche(r) besucht wird\\
+\codein{tex}{\myteacher{Michael Borko}} & Betreuende Lehrkraft\\
+\codein{tex}{\myversion{0.1}} & Aktuelle Version des Dokuments\\
+\codein{tex}{\mybegin{31.1.18}} & Datum des Beginns\\
+\codein{tex}{\myfinish{1.2.18}} & Datum an dem die Arbeit beendet wurde
+\end{tabular}
 
 \newpage
 \section{Kommandos}\label{sec:Kommandos}
@@ -86,6 +86,8 @@ In diesem Fall werden einige \LaTeX-Elemente dokumentiert, welche bei der Kreati
 
 \subsubsection{TabularX}
 TabularX erlaubt die Angabe der Größe der Tabelle und bietet zudem den Reihentyp \texttt{X}, der die verbleibende Größe neben anderen Reihen mit anderen \texttt{X} Reihen teilt.
+\\\\
+ACHTUNG: Die Quelltextdarstellung mittels \codein{tex}{\codein}, \codein{tex}{\mintinline} oder \codein{tex}{\lstinline } ist in einer TabularX Umgebung nicht möglich!
 \begin{table}[H]
     \center
     \begin{tabularx}{\textwidth}{| c | X |}
@@ -99,6 +101,7 @@ TabularX erlaubt die Angabe der Größe der Tabelle und bietet zudem den Reihent
     \label{tab:tabularx}
 \end{table}
 
+\newpage
 \subsection{Aufzählung}
 \begin{itemize}
 	\item Element einer Aufzählung
@@ -115,7 +118,6 @@ TabularX erlaubt die Angabe der Größe der Tabelle und bietet zudem den Reihent
         \2 Zweites eingerücktes Element einer Aufzählung
 \end{outline}
 
-\newpage
 \subsection{Glossar}
 Zur Verwaltung des Glossars wird standardmäßig die Datei \texttt{glo.tex} verwendet, wobei sowohl Definitionen als auch Akronyme definiert werden können.
 \\\\
@@ -123,9 +125,9 @@ Als Beispiel wurde ein Akronym für \gls{ac-syt} und eine Definition zu \gls{ac-
 
 \inputcode{tex}{glo.tex}
 
-Im Dokument selbst kann ein Akronym mittels \codeinline{tex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
+Im Dokument selbst kann ein Akronym mittels \codein{tex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
 \\\\
-Mit \codeinline{tex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
+Mit \codein{tex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
 
 \subsection{Zitate}
 Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
@@ -133,33 +135,42 @@ Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 \newpage
 \subsection{Quelltext}
 \begin{listing}[H]
-\begin{code}{java}
+\codeline{tex}{\begin{code}[]{java}}
+\begin{code}[firstnumber=last]{java}
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
+\codeline[firstnumber=last]{tex}{\end{code}}
+\caption{Java Code}
+\label{lst:java-code}
 \end{listing}
-
-Auch die Darstellung von Quelltext innerhalb eines Textes ist über \codeinline{tex}{\codeinline{tex}} möglich.
-
-\codeline{tex}{\codeline{tex}}
+~\\
+Die Darstellung von Quelltext im Text ist über das Kommando \codein{tex}{\codein{lang}[options]{code}} möglich.
+\\\\
+Eine einzelne Zeile kann mittels
+\codeline{tex}{\codeline{lang}[options]{code}}
+eingefügt werden.
 
 \subsubsection{Listings}
 \begin{listing}[H]
-\codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Listing]}
-\begin{code}{tex}
+\codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
+\begin{code}{java}
     public static void main(String[] args) {
         System.out.println("Ich bin ein Array!")
     }
 \end{code}
 \codeline[firstnumber=last]{tex}{\end{lstlisting}}
+\caption{Java Lstlisting}
+\label{lst:java-lstlisting}
 \end{listing}
 
+\newpage
 \subsubsection{Minted}
 Benötigt die Option \texttt{minted}.
 \paragraph{Umgebung}~\\
 \begin{listing}[H]
-\codeline{tex}{\begin{minted}{tex}}
+\codeline{tex}{\begin{minted}[]{java}}
 \begin{code}[firstnumber=last]{java}
     public static void main(String[] args) {
         System.out.println("Ich bin ein Array!")
@@ -173,18 +184,16 @@ Benötigt die Option \texttt{minted}.
 \paragraph{Zeile}~\\
 \begin{listing}[H]
 \begin{code}{tex}
-\mint{tex}|...|
+\mint[options]{lang}|code|
 \end{code}
-\caption{Minted Inline}
-\label{lst:minted-inline}
+\caption{Minted Einzeiler}
+\label{lst:minted-line}
 \end{listing}
 
 \begin{listing}[H]
-\begin{code}{java}
-public static void main(String[] args) {
-    System.out.println("Ich bin ein Array!")
-}
+\begin{code}{tex}
+\mintinline[options]{lang}{code}
 \end{code}
-\caption{Java Minted}
-\label{lst:minted-java}
+\caption{Minted Inline}
+\label{lst:minted-inline}
 \end{listing}

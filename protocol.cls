@@ -73,10 +73,10 @@
 \RequirePackage{pageslts}
 \RequirePackage{outlines, enumitem}
 \RequirePackage{booktabs, tabularx}
-\RequirePackage{listings} % Required by totalcount also without minted
+\RequirePackage{listings}   % Required by totalcount also without minted
 \RequirePackage{graphicx, subcaption}
 \RequirePackage[font=small]{caption}
-\RequirePackage{accsupp} % [1]
+\RequirePackage{accsupp}    % [1]
 
 % ## Count list items for lists
 \RequirePackage[figure,table,lstlisting]{totalcount}
@@ -93,16 +93,20 @@
     \else\RequirePackage[backend=bibtex]{biblatex}\fi
 \fi
 
+% ## Colors
+\definecolor{AlmostWhite}{RGB}{246,246,246}
+\definecolor{TangoBlue}{RGB}{33,74,135}
+
 % ## Require and configure minted
 \ifminted
     \RequirePackage[newfloat]{minted}
-    \usemintedstyle{rainbow_dash}
+    \usemintedstyle{tango} % rainbow_dash
     \setminted{
         fontsize=\footnotesize,
         linenos=true,
         breakanywhere=true,
         breaklines=true,
-        framesep=12pt,
+        framesep=2mm,
         tabsize=4}
     % ## [1] Avoid copying line numbers on listings
     \renewcommand\theFancyVerbLine{
@@ -111,10 +115,10 @@
         \EndAccSupp{}
     }
 \else
-    \RequirePackage{listing} % Already defined by minted itself
-    \RequirePackage{listingsutf8} % UTF-8 Input support for listings
+    \RequirePackage{listing}        % Already defined by minted itself
+    \RequirePackage{listingsutf8}   % UTF-8 Input support for listings
     % Load lstlistings config if exists
-    \IfFileExists{lst/lst.tex}{\input{lst/lst}}{}
+    \IfFileExists{lst.tex}{\input{lst}}{}
 \fi
 
 % #Variables
@@ -137,6 +141,7 @@
 % ## Footnotes
 \def\arraystretch{1.5}
 \renewcommand{\thefootnote}{\Roman{footnote}}
+
 % ## Tabularx
 \newcolumntype{Y}{p{.5\textwidth}}
 
@@ -156,7 +161,7 @@
 \renewcommand{\footrulewidth}{\headrulewidth}
 
 % ## Hyperlinks
-\hypersetup{colorlinks=true, linkcolor=MidnightBlue, urlcolor=MidnightBlue, citecolor=MidnightBlue}
+\hypersetup{colorlinks=true, linkcolor=TangoBlue, urlcolor=TangoBlue, citecolor=TangoBlue}
 
 % ## Glossaries
 % Add glossary entries if they exist
@@ -244,10 +249,9 @@
     \newenvironment{code}[2][]{
         \VerbatimEnvironment%
         \begin{minted}[#1]{#2}%
-    }{  \end{minted}%
-    }
+    }{  \end{minted}}
     % Inline code
-    \newcommand\codeinline[3][]{\mintinline[#1]{#2}{#3}}
+    \newcommand\codein{\mintinline} %\newcommand\codein[3][]{\mintinline[#1]{#2}{#3}}
     % One-line code
     \newcommand\codeline[3][]{\mint[#1]{#2}|#3|}
     % Input code
@@ -256,17 +260,14 @@
     % Code settings
     \newcommand\setcode[1]{\lstset{#1}}
     % Code environment
-    \lstnewenvironment{code}[1]{
-        \renewcommand\lstlistingname{Case}%
-        \lstset{language={#1}}%
-    }{}
+    \lstnewenvironment{code}[1]{\lstset{language={#1}}}{}
     % Inline code
-    \newcommand\codeinline{[3][]{\lstinline[language=#2,#1]{#3}}}
+    \newcommand\codein[3][]{\lstinline[language=#2,#1]$#3$}
     % One-line code
     \newcommand\codeline[3][]{
-        \begin{lstlisting}[language=#2,#1]
-            #3
-        \end{lstlisting}
+        \begin{code}[language=#2,#1]%
+            #3%
+        \end{code}%
     }
     % Input code
     \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{#3}}

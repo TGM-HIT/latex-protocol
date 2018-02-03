@@ -107,7 +107,7 @@ endif
 	@$(MAKE) clean
 
 
-FILES = $(filter-out $(wildcard glo*.tex _*.tex), $(wildcard *.tex))
+FILES = $(filter-out $(wildcard lst*.tex glo*.tex _*.tex), $(wildcard *.tex))
 all:
 	@echo -e "$(ecG)Run $(eR)target $(ecC)all $(eR)on $(ecP).$(eR)"
 	@echo -e "$(ecG)Found $(ecP)$(FILES)$(eR)" && $(foreach x, $(FILES), $(MAKE) file f="$(notdir $(basename $(x)))";)

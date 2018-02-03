@@ -1,4 +1,4 @@
-\documentclass{protocol}
+\documentclass[minted]{protocol}
 % Required
 \title{Protokolle in \LaTeX}
 \author{Markus Reichl}
@@ -11,14 +11,14 @@
 \myversion{0.1}
 \mybegin{31.1.18}
 \myfinish{1.2.18}
-% \setcode{frame=lines} % Adjust minted settings
-% Actual content
+\setcode{frame=single} 				% Add a frame to codes
+% \setcode{bgcolor=AlmostWhite}		% Add a background to codes
 \begin{document}
-% \thispagestyle{fancy}	% Makes the first page fancy too
-% \begin{abstract}\end{abstract} % Add a short overview
+% \thispagestyle{fancy}				% Makes the first page fancy too
+% \begin{abstract}\end{abstract} 	% Add a short overview
 
-\include{_task} % Information about the purpose of this project
+\include{_task} 	% Information about the purpose of this project
 \include{_solution} % Solution for the given tasks and their documentation
 
-% \glsaddall % Add all available glossary entries to printglossaries
+% \glsaddall 		% Add all glossary entries to printglossaries
 \end{document}
