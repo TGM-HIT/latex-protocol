@@ -63,14 +63,12 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
-\RequirePackage{ccicons, csquotes}
-\RequirePackage{amssymb, mathtools}
+\RequirePackage{ccicons, csquotes, amssymb, mathtools}
 
 \RequirePackage{fancyhdr, float, multicol, multirow, titling}
 \RequirePackage[marginal, norule, perpage]{footmisc}
 \RequirePackage[dvipsnames]{xcolor}
-\RequirePackage{hyperref, url}
-\RequirePackage{pageslts}
+\RequirePackage{hyperref, url, pageslts}
 \RequirePackage{outlines, enumitem}
 \RequirePackage{booktabs, tabularx}
 \RequirePackage{listings}   % Required by totalcount also without minted
@@ -163,12 +161,10 @@
 % ## Hyperlinks
 \hypersetup{colorlinks=true, linkcolor=TangoBlue, urlcolor=TangoBlue, citecolor=TangoBlue}
 
-% ## Glossaries
-% Add glossary entries if they exist
+% ## Add glossary entries if they exist
 \IfFileExists{glo.tex}{\input{glo}\makeglossaries}{}
 
-% ## Bibliography
-% Add bibliography entries if they exist
+% ## Add bibliography entries if they exist
 \IfFileExists{bib.bib}{\addbibresource{bib}}{}
 
 % # Makros
@@ -181,12 +177,10 @@
         \hfill
         \IfFileExists{img/hit-logo.png}{\includegraphics[height=2cm]{img/hit-logo.png}}{}
     \fi
-    \iflandscape
-        \vskip 1cm % Minimum margin
+    \iflandscape\vskip 1cm  % Minimum margin
     \else
-        \iftable\vskip 4cm % Minimum margin
-        \else\vskip 2cm % Minimum margin
-        \fi
+        \iftable\vskip 4cm  % Minimum margin
+        \else\vskip 2cm\fi  % Minimum margin
     \fi
     % Content
     \begin{center}
