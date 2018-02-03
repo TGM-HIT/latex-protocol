@@ -119,7 +119,7 @@
     \IfFileExists{lst.tex}{\input{lst}}{}
 \fi
 
-% #Variables
+% # Variables
 \newcommand\@mysubtitle{}   % Untertitel
 \newcommand\mysubtitle[1]{\renewcommand\@mysubtitle{#1}}
 \newcommand\@mysubject{}    % Systemtechnik Labor
@@ -144,12 +144,11 @@
 \newcolumntype{Y}{p{.5\textwidth}}
 
 % ## Header
-\pagestyle{fancy}
-\fancyhf{}
+\pagestyle{fancy}\fancyhf{}
 
 \makeatletter
-\fancyhead[L]{\small \@mysubject}
-\fancyhead[C]{\small \thetitle}
+\fancyhead[L]{\small \thetitle}
+\fancyhead[C]{\small \@mysubject}
 \fancyhead[R]{\small \@date}
 \fancyfoot[L]{\small \theauthor ~ {\footnotesize\ccby}}
 \fancyfoot[C]{\small \@mycourse}
@@ -161,37 +160,30 @@
 % ## Hyperlinks
 \hypersetup{colorlinks=true, linkcolor=TangoBlue, urlcolor=TangoBlue, citecolor=TangoBlue}
 
-% ## Add glossary entries if they exist
+% ## Add glossary / bibliography entries if they exist
 \IfFileExists{glo.tex}{\input{glo}\makeglossaries}{}
-
-% ## Add bibliography entries if they exist
 \IfFileExists{bib.bib}{\addbibresource{bib}}{}
 
 % # Makros
 % ## Title
 \makeatletter
 \renewcommand\@maketitle{
-    % Logos
-    \iflogo ~\\
-        \IfFileExists{img/tgm-logo.png}{\includegraphics[height=2cm]{img/tgm-logo.png}}{}
-        \hfill
-        \IfFileExists{img/hit-logo.png}{\includegraphics[height=2cm]{img/hit-logo.png}}{}
-    \fi
-    \iflandscape\vskip 1cm  % Minimum margin
-    \else
-        \iftable\vskip 4cm  % Minimum margin
-        \else\vskip 2cm\fi  % Minimum margin
+    \iflogo~\\              % Print logos
+        \IfFileExists{img/tgm-logo.png}{\includegraphics[height=2cm]{img/tgm-logo.png}}{}\hfill
+        \IfFileExists{img/hit-logo.png}{\includegraphics[height=2cm]{img/hit-logo.png}}{}\fi
+
+    \vskip 1cm          % Minimum margin
+    \iflandscape\else   % Do not increase margin on landscape
+        \iftable\vskip 3cm  % + table margin
+        \else\vskip 1cm\fi  % + default margin
     \fi
     % Content
     \begin{center}
-        {\Large
-        \@mysubject}    ~\\\vspace{0.5em}
-        \@mycourse      ~\\\vspace{2em}
-        {\Huge\textbf{
-        \@title}}       ~\\\vspace{1em}
-        {\LARGE
-        \@mysubtitle}   ~\\\vspace{2em}
-        \@author        ~\\\vspace{0.5em}
+        \if\relax\@mysubject\relax\else     {\Large\@mysubject}     ~\\\vspace{0.5em}\fi
+        \if\relax\@mycourse\relax\else      \@mycourse              ~\\\vspace{2em}\fi
+        {\Huge\textbf\thetitle}                                     ~\\\vspace{1em}
+        \if\relax\@mysubtitle\relax\else    {\LARGE\@mysubtitle}    ~\\\vspace{2em}\fi
+        \theauthor                                                  ~\\\vspace{0.5em}
         \@date
     \end{center}
     \vskip 1cm  % Minimum margin
@@ -200,14 +192,18 @@
 % ## Table after titlepage
 \makeatletter
 \newcommand\maketable{
-    \vspace*{\fill}
-    \begin{center}
-    \begin{tabularx}{\textwidth}{X X X}
-        && Version: \hfill \@myversion\\
-        Note: && Begonnen: \hfill \@mybegin\\
-        Betreuer: \@myteacher && Beendet: \hfill \@myfinish
-    \end{tabularx}
-    \end{center}
+    \vspace*{\fill}~\\
+    \begin{minipage}{0.5\textwidth}
+        ~\\\\
+        Note: \vspace{0.5em}\\
+        Betreuer: \@myteacher
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \if\relax\@myversion\relax\else Version:\hfill\@myversion   \vspace{0.5em}\\\fi
+        \if\relax\@mybegin\relax\else   Begonnen:\hfill\@mybegin    \vspace{0.5em}\\\fi
+        \if\relax\@myfinish\relax\else  Beendet:\hfill\@myfinish    \fi
+    \end{minipage}
     \newpage
 }\makeatother
 
@@ -269,34 +265,22 @@
 
 % ## Add common commands at the beginning of the document
 \AtBeginDocument{
-    \pagenumbering{arabic} % Required by pageslts
-    % Titlepage
-    \iftitle
-        \maketitle
-        \thispagestyle{empty}
-    \fi
-    % Version table
-    \iftable\maketable\fi
-
-    % Table of contents
-    \iftoc
-        \tableofcontents
-        \glsresetall
-    \fi
+    \pagenumbering{arabic}                      % Required by pageslts
+    \iftitle\maketitle\thispagestyle{empty}\fi  % Titlepage
+    \iftable\maketable\fi                       % Version table
+    \iftoc\tableofcontents\glsresetall\fi       % Table of contents
 }
 
 % ## Add common commands at the end of the document
 \AtEndDocument{
-    % Print glossaries
-    \ifglo
-        % \glsaddall % Also list unused glossary entries
-        \printglossaries % List used glossary entries
-    \fi
-    % Print bibliography
-    \ifbib
+    
+    \ifglo  % Print glossaries
+        % \glsaddall                % Also list unused glossary entries
+        \printglossaries\fi         % List used glossary entries
+
+    \ifbib  % Print bibliography
         \ifnatbib\bibliography{bib} % List bibliography entries with natbib
-        \else\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]\fi
-    \fi
+        \else\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]\fi\fi
     % List lists if not empty
     \iftotalfigures\listoffigures\fi
     \iftotaltables\listoftables\fi
