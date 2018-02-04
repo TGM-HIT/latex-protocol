@@ -229,4 +229,4 @@ TSWLatexianTemp*
 # End of https://www.gitignore.io/api/latex
 
 __sandbox*
-*.fuse
+fuse*
