@@ -8,6 +8,7 @@ ecP = \e[0;35m
 ecC = \e[0;36m
 # constants
 BUILD = .
+ERRLINES = 1
 
 default:
 	@echo -e "$(ecG)Decide $(eR)on a target"
@@ -25,7 +26,7 @@ ifneq (.,$(BUILD))
 	@mkdir -p $(BUILD)
 endif
 	@pdflatex -shell-escape -file-line-error -interaction=batchmode -output-directory=$(BUILD) $(f) || echo -e "$(ecR)Error running $(ecC)pdflatex$(ecR)!$(eR)"
-	@grep ".*:[0-9]*:.*" $(BUILD)/$(f).log -A1 && { false; } || { echo -e "$(ecG)Everything OK!$(eR)"; }
+	@grep ".*:[0-9]*:.*" $(BUILD)/$(f).log -A$(ERRLINES) && { false; } || { echo -e "$(ecG)Everything OK!$(eR)"; }
 
 
 glossaries:

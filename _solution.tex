@@ -16,22 +16,28 @@
 \end{tabularx}
 
 \subsection{Variablen}
+Variablen werden über Kommandos gesetzt, die als Parameter den gewünschten Wert erhalten.
+\begin{code}{tex}
+\myvariable{value}
+\end{code}
+
 \begin{tabular}{l l}
 \textbf{Kommando} & \textbf{Beispiel}\\
 
-\codein{tex}{\mysubtitle{Laborprotokoll}} & Untertitel oder Zugehörigkeit\\
-\codein{tex}{\mysubject{Systemtechnik Labor}} & Thema / Fach welches bearbeitet wird\\
-\codein{tex}{\mycourse{xHIT 2017/18, Gruppe A}} & Kurs / Klasse welche(r) besucht wird\\
-\codein{tex}{\myteacher{Michael Borko}} & Betreuende Lehrkraft\\
-\codein{tex}{\myversion{0.1}} & Aktuelle Version des Dokuments\\
-\codein{tex}{\mybegin{31.1.18}} & Datum des Beginns\\
-\codein{tex}{\myfinish{1.2.18}} & Datum an dem die Arbeit beendet wurde
+{\small \verb|mysubtitle|} & Untertitel oder Zugehörigkeit\\
+{\small \verb|mysubject|} & Thema / Fach welches bearbeitet wird\\
+{\small \verb|mycourse|} & Kurs / Klasse welche(r) besucht wird\\
+{\small \verb|myteacher|} & Betreuende Lehrkraft\\
+{\small \verb|myversion|} & Aktuelle Version des Dokuments\\
+{\small \verb|mybegin|} & Datum des Beginns\\
+{\small \verb|myfinish|} & Datum an dem die Arbeit beendet wurde
 \end{tabular}
 
 \newpage
 \section{Kommandos}\label{sec:Kommandos}
-\subsection{\texttt{makefig}}
+\subsection{\texttt makefig}
 
+\begin{listing}
 \begin{code}{tex}
 \makefig{img/hit-logo.png}{height=2cm}{
     Mit Beschreibung und Label  % (Optional)
@@ -39,30 +45,36 @@
     fig:caption-label           % (Optional)
 }
 \end{code}
+\caption{\texttt makefig}
+\label{lst:makefig}
+\end{listing}
 \makefig{img/hit-logo.png}{height=2cm}{Mit Beschreibung und Label}{fig:caption-label}
 
-\subsection{\texttt{vardef}}
-\codeline{tex}{$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$}
-$$g(x) = \frac{1}{\sigma\sqrt{2\pi}} * e^{-\frac{(x-\mu)^2}{2\sigma}}$$
-\begin{listing}[H]
+\subsection{\texttt vardef}
+\begin{listing}
+\begin{code}{tex}
+$$e^{i*\pi} = -1$$}
+\end{code}
+
+$$e^{i*\pi} = -1$$
+
 \begin{code}[firstnumber=last]{tex}
 \begin{vardef}
-    \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
-    \addvardef{$x$}{Zufallsvariable}
-    \addvardef{$\mu$}{Erwartungswert}
-    \addvardef{$\sigma$}{Standardabweichung}
+    \addvardef{$e$}{Eulersche Zahl}
+    \addvardef{$\pi$}{Kreiszahl}
+    \addvardef{$i$}{Imaginäre Einheit}
 \end{vardef}
 \end{code}
-\caption{\texttt{vardef}}
-\label{lst:vardef}
-\end{listing}
 
 \begin{vardef}
-    \addvardef{$g(x)$}{Wahrscheinlichkeitsdichte}
-    \addvardef{$x$}{Zufallsvariable}
-    \addvardef{$\mu$}{Erwartungswert}
-    \addvardef{$\sigma$}{Standardabweichung}
+    \addvardef{$e$}{Eulersche Zahl}
+    \addvardef{$\pi$}{Kreiszahl}
+    \addvardef{$i$}{Imaginäre Einheit}
 \end{vardef}
+
+\caption{\texttt vardef}
+\label{lst:vardef}
+\end{listing}
 
 \newpage
 \section{Anwendung}\label{sec:Anwendung}
@@ -87,8 +99,8 @@ In diesem Fall werden einige \LaTeX-Elemente dokumentiert, welche bei der Kreati
 \subsubsection{TabularX}
 TabularX erlaubt die Angabe der Größe der Tabelle und bietet zudem den Reihentyp \texttt{X}, der die verbleibende Größe neben anderen Reihen mit anderen \texttt{X} Reihen teilt.
 \\\\
-ACHTUNG: Die Quelltextdarstellung mittels \codein{tex}{\codein}, \codein{tex}{\mintinline} oder \codein{tex}{\lstinline } ist in einer TabularX Umgebung nicht möglich!
-\begin{table}[H]
+ACHTUNG: Die Verwendung von \verb|\codein|, \verb|\mintinline| oder \verb|\lstinline| ist in einer TabularX Umgebung nicht möglich!
+\begin{table}
     \center
     \begin{tabularx}{\textwidth}{| c | X |}
         \hline Header & Kopf\\ \hline\hline
@@ -125,42 +137,40 @@ Als Beispiel wurde ein Akronym für \gls{ac-syt} und eine Definition zu \gls{ac-
 
 \inputcode{tex}{glo.tex}
 
-Im Dokument selbst kann ein Akronym mittels \codein{tex}{\gls{ac-syt}} verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
+Im Dokument selbst kann ein Akronym mittels \verb|\gls{ac-syt}| verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
 \\\\
-Mit \codein{tex}{\gls{syt}} kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
+Mit \verb|\gls{syt}| kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
 
 \subsection{Zitate}
 Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 
 \newpage
 \subsection{Quelltext}
-\begin{listing}[H]
-\codeline{tex}{\begin{code}[]{java}}
-\begin{code}[firstnumber=last]{java}
-public static void main(String[] args) {
-    System.out.println("Ich bin ein Array!")
-}
-\end{code}
-\codeline[firstnumber=last]{tex}{\end{code}}
+\begin{listing}
+\ifminted   \codeline{tex}{\begin{code}[]{java}}
+\else       \codeline{tex}{\\begin\{code\}[]\{java\}}\fi
+\inputcode[firstnumber=last]{java}{code.java}
+\ifminted   \codeline[firstnumber=last]{tex}{\end{code}}
+\else       \codeline[firstnumber=last]{tex}{\\end\{code\}}\fi
+
 \caption{Java Code}
 \label{lst:java-code}
 \end{listing}
 ~\\
-Die Darstellung von Quelltext im Text ist über das Kommando \codein{tex}{\codein{lang}[options]{code}} möglich.
+Die Darstellung von Quelltext im Text ist über das Kommando \verb|\codein[options]{lang}{code}| möglich.
 \\\\
 Eine einzelne Zeile kann mittels
-\codeline{tex}{\codeline{lang}[options]{code}}
+\ifminted   \codeline{tex}{\codeline[options]{lang}{code}}
+\else       \codeline{tex}{\\codeline[options]\{lang\}\{code\}}\fi
 eingefügt werden.
 
 \subsubsection{Listings}
-\begin{listing}[H]
-\codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
-\begin{code}{java}
-    public static void main(String[] args) {
-        System.out.println("Ich bin ein Array!")
-    }
-\end{code}
-\codeline[firstnumber=last]{tex}{\end{lstlisting}}
+\begin{listing}
+\ifminted   \codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
+\else       \codeline{tex}{\\begin\{lstlisting\}[language=Java, caption=Java Lstlisting]}\fi
+\inputcode[firstnumber=last]{java}{code.java}
+\ifminted   \codeline[firstnumber=last]{tex}{\end{lstlisting}}
+\else       \codeline[firstnumber=last]{tex}{\\end\{lstlisting\}}\fi
 \caption{Java Lstlisting}
 \label{lst:java-lstlisting}
 \end{listing}
@@ -169,20 +179,18 @@ eingefügt werden.
 \subsubsection{Minted}
 Benötigt die Option \texttt{minted}.
 \paragraph{Umgebung}~\\
-\begin{listing}[H]
-\codeline{tex}{\begin{minted}[]{java}}
-\begin{code}[firstnumber=last]{java}
-    public static void main(String[] args) {
-        System.out.println("Ich bin ein Array!")
-    }
-\end{code}
-\codeline[firstnumber=last]{tex}{\end{minted}}
+\begin{listing}
+\ifminted   \codeline{tex}{\begin{minted}[options]{java}}
+\else       \codeline{tex}{\\begin\{minted\}[]\{java\}}\fi
+\inputcode[firstnumber=last]{java}{code.java}
+\ifminted   \codeline[firstnumber=last]{tex}{\end{minted}}
+\else       \codeline[firstnumber=last]{tex}{\\end\{minted\}}\fi
 \caption{Minted Umgebung}
 \label{lst:minted-env}
 \end{listing}
 
 \paragraph{Zeile}~\\
-\begin{listing}[H]
+\begin{listing}
 \begin{code}{tex}
 \mint[options]{lang}|code|
 \end{code}
@@ -190,7 +198,7 @@ Benötigt die Option \texttt{minted}.
 \label{lst:minted-line}
 \end{listing}
 
-\begin{listing}[H]
+\begin{listing}
 \begin{code}{tex}
 \mintinline[options]{lang}{code}
 \end{code}

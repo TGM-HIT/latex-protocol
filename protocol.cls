@@ -77,41 +77,41 @@
 \RequirePackage{accsupp}    % [1]
 
 % ## Count list items for lists
-\RequirePackage[figure,table,lstlisting]{totalcount}
-% Update listing numbers when using minted
-\AtBeginEnvironment{listing}{\setcounter{listing}{\value{lstlisting}}}
-\AtEndEnvironment{listing}{\stepcounter{lstlisting}}
+\RequirePackage[figure,table,listing]{totalcount}
 
 % ## Glossaries
 \ifglo\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}\fi
 
 % ## Bibliography
-\ifbib
-    \ifnatbib\RequirePackage{natbib}
-    \else\RequirePackage[backend=bibtex]{biblatex}\fi
-\fi
+\ifbib  \ifnatbib\RequirePackage{natbib}    % Choose backend
+        \else\RequirePackage[backend=bibtex]{biblatex}\fi\fi
 
 % ## Colors
-\definecolor{AlmostWhite}{RGB}{246,246,246}
-\definecolor{TangoBlue}{RGB}{33,74,135}
+\definecolor{MyLightGray}{RGB}{252,252,252}
+\definecolor{MyBlue}{RGB}{33,74,135}
+\definecolor{MyGreen}{RGB}{79,153,5}
+\definecolor{MyBrown}{RGB}{143,89,3}
+\definecolor{MyOrange}{RGB}{213,111,30}
 
-% ## Require and configure minted
+% ## Require and configure minted or listings
 \ifminted
     \RequirePackage[newfloat]{minted}
-    \usemintedstyle{tango} % rainbow_dash
-    \setminted{
-        fontsize=\small,
-        linenos=true,
-        breakanywhere=true,
-        breaklines=true,
-        framesep=2mm,
-        tabsize=4}
+    \floatplacement{listing}{H} % Override default listing float
+    \usemintedstyle{tango}      % autumn, rainbow_dash, tango, trac
+    \setminted{ fontsize=\small,
+                linenos=true,
+                breakanywhere=true,
+                breaklines=true,
+                framesep=2mm,
+                tabsize=4}
+
     % ## [1] Avoid copying line numbers on listings
     \renewcommand\theFancyVerbLine{
         \BeginAccSupp{method=escape,ActualText={}}
         {\rmfamily\tiny\arabic{FancyVerbLine}}
         \EndAccSupp{}
     }
+    \SetupFloatingEnvironment{listing}{listname=Auflistungsverzeichnis,name=Auflistung}
 \else
     \RequirePackage{listing}                % Already defined by minted itself
     \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
@@ -135,12 +135,17 @@
 \newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
 
 % # Package configuration
+\newcolumntype{Y}{p{.5\textwidth}}  % TabularX
+
+\floatplacement{table}{H}   % Override default table float
+\floatplacement{figure}{H}  % Override default figure float
+
+\hypersetup{breaklinks=true, colorlinks=true,   % Hyperlinks
+            linkcolor=MyBlue, urlcolor=MyBlue, citecolor=MyBlue}
+
 % ## Footnotes
 \def\arraystretch{1.5}
-\renewcommand{\thefootnote}{\Roman{footnote}}
-
-% ## TabularX
-\newcolumntype{Y}{p{.5\textwidth}}
+\renewcommand\thefootnote{\Roman{footnote}}
 
 % ## Header
 \pagestyle{fancy}\fancyhf{}
@@ -156,8 +161,6 @@
 
 \renewcommand{\footrulewidth}{\headrulewidth}
 
-% ## Hyperlinks
-\hypersetup{colorlinks=true, linkcolor=TangoBlue, urlcolor=TangoBlue, citecolor=TangoBlue}
 
 % ## Add glossary / bibliography entries if they exist
 \IfFileExists{glo.tex}{\input{glo}\makeglossaries}{}
@@ -192,9 +195,9 @@
 \makeatletter
 \newcommand\maketable{
     \vfill~\\
-    \begin{minipage}[t]{0.5\textwidth}
-        Bewertung: \vspace{0.5em}\\
-        Betreuer: \@myteacher
+    \begin{minipage}[t]{0.3\textwidth}
+        Bewertung:\hfill\vspace{0.5em}\\
+        Betreuer:\hfill\@myteacher
     \end{minipage}
     \hfill
     \begin{minipage}[t]{0.3\textwidth}
@@ -231,34 +234,26 @@
 % ## Code environments
 % Extra % is used as a linefix for the code interpreter
 \ifminted   % Minted goes here
-    % Code settings
-    \newcommand\setcode[1]{\setminted{#1}}
-    % Code environment
-    \newenvironment{code}[2][]{
+    \newcommand\setcode[1]{\setminted{#1}}  % Code settings
+    \newenvironment{code}[2][]{             % Code environment
         \VerbatimEnvironment%
         \begin{minted}[#1]{#2}%
     }{  \end{minted}}
-    % Inline code
-    \newcommand\codein{\mintinline} %\newcommand\codein[3][]{\mintinline[#1]{#2}{#3}}
-    % One-line code
-    \newcommand\codeline[3][]{\mint[#1]{#2}\relax#3\relax}
-    % Input code
-    \newcommand\inputcode[3][]{\inputminted[#1]{#2}{#3}}
+
+    \newcommand\codein{\mintinline}                         % Inline code (alias)
+    \newcommand\inputcode{\inputminted}                     % Input code (alias)
+
+    \newcommand\codeline[3][]{\mint[#1]{#2}\relax#3\relax}  % Single line of code
 \else       % Listings goes here
-    % Code settings
-    \newcommand\setcode[1]{\lstset{#1}}
-    % Code environment
-    \lstnewenvironment{code}[1]{\lstset{language={#1}}}{}
-    % Inline code
-    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}
-    % One-line code
-    \newcommand\codeline[3][]{
-        \begin{flushleft}
-            \lstinline[language=#2,#1]\relax#3\relax
-        \end{flushleft}
-    }
-    % Input code
-    \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{#3}}
+    \newcommand\setcode[1]{\lstset{#1}}                         % Code settings
+    \lstnewenvironment{code}[2][]{\lstset{language={#2},#1}}{}  % Code environment
+
+    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}               % Inline code
+    \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{\detokenize{#3}}}   % Input code
+
+    \newcommand\codeline[3][]{\begin{flushleft}
+        \lstinline[language=#2,#1]\relax#3\relax            % Single line of code
+    \end{flushleft}}
 \fi
 
 % ## Add common commands at the beginning of the document
@@ -281,5 +276,5 @@
     % List lists if not empty
     \iftotalfigures\listoffigures\fi
     \iftotaltables\listoftables\fi
-    \iftotallstlistings\lstlistoflistings\fi
+    \iftotallistings\listoflistings\fi
 }

@@ -4,13 +4,15 @@
 }
 
 % # Configuration
+\renewcommand\lstlistingname{Auflistung}
+\renewcommand\lstlistlistingname{Auflistungsverzeichnis}
 \lstset{
 	extendedchars=true,
 	texcl=true,
 	tabsize=4,
 	breaklines=true,
-	upquote=true;	% Straight single quotes
-	stepnumber=2,
+	upquote=true,	% Straight single quotes
+	stepnumber=1,
 	captionpos=b,
 	showspaces=false,
 	showstringspaces=false,
@@ -21,10 +23,12 @@
 	numbers=left,
 	% Code styles
 	basicstyle=\ttfamily\small,
-	identifierstyle=\color{black},				% identifier
-	commentstyle=\color{gray},    				% comments
-  	keywordstyle=\color{TangoBlue}\bfseries,	% keywords
-  	stringstyle=\color{ForestGreen},     		% string literals
+	% texcsstyle=*\color{MyOrange},			% Tex control sequences
+	% directivestyle=\color{MyOrange},		% Directives
+	identifierstyle=\color{black},			% Identifiers
+	commentstyle=\color{MyBrown}\itshape,   % Comments
+  	keywordstyle=\color{MyBlue}\bfseries,	% Keywords
+  	stringstyle=\color{MyGreen},     		% String literals
 }
 
 % Fix UTF-8 encodings extendedchars cannot catch
