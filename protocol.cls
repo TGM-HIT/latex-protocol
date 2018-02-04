@@ -71,7 +71,6 @@
 \RequirePackage{hyperref, url, pageslts}
 \RequirePackage{outlines, enumitem}
 \RequirePackage{booktabs, tabularx}
-\RequirePackage{listings}   % Required by totalcount also without minted
 \RequirePackage{graphicx, subcaption}
 \RequirePackage[font=small]{caption}
 \RequirePackage{accsupp}    % [1]
@@ -114,6 +113,7 @@
     \SetupFloatingEnvironment{listing}{listname=Auflistungsverzeichnis,name=Auflistung}
 \else
     \RequirePackage{listing}                % Already defined by minted itself
+    \RequirePackage{listings}
     \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
     \IfFileExists{lst.tex}{\input{lst}}{}   % Load lstlistings config if exists
 \fi
