@@ -1,10 +1,9 @@
-## Protokollvorlagen
+## A Latex Protocol Template
 
-### Optionen
-
+### Options
 Option | Result
 ------ | ------
-`landscape` | Change the page format to landscape orientation (thanks to Robert Wimberger)
+`landscape` | Change the page format to landscape orientation
 `minted` | Add and configure minted package
 `natbib` | Change bibtex backend to natbib
 `nobib` | Disable bibliography
@@ -14,3 +13,19 @@ Option | Result
 `notitle` | Disable titlepage
 `notoc` | Disable table of contents
 `notable` | Disable table on titlepage
+
+### Variables
+Variables can be set as commands like
+```tex
+\myvariable{value}
+```
+
+Command | Content
+------- | -------
+`mysubtitle` | Subtitle of group
+`mysubject` | Thematic group / subject
+`mycourse` | Current course / class
+`myteacher` | Current teacher
+`myversion` | Current version of the document
+`mybegin` | Start of documentation
+`myfinish` | End of documentation
