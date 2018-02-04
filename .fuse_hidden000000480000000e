@@ -1,0 +1,45 @@
+\documentclass{protocol}
+
+\title{Sandbox}
+\author{Markus Reichl}
+
+\myteacher{Michael Borko}
+\myfinish{3.2.18}
+\setcode{frame=single}
+\begin{document}
+\begin{code}{}
+There is no lexer..
+\end{code}
+
+\begin{code}{Java}
+public static void main(String[] args) {
+	System.out.println("I am Java!")
+}
+\end{code}
+
+\begin{code}{Python}
+if __name__ == '__main__':
+	print("I am Python!")
+\end{code}
+~\\
+This code is \codein{}{inline}.
+\\\\
+This code is \codein{Python}{print("inline python")}.
+\\\\
+%This code is a line:
+\codeline{Python}{print("I am a python line!")}
+
+\relax
+
+\codein{tex}{$x^2$}
+
+\codeline{Java}{\{x = 1\}}
+
+%\codeline{tex}{\backslash}
+\inputcode{tex}{code.java}
+
+\begin{code}{tex}
+\backslash
+\end{code}
+
+\end{document} 
