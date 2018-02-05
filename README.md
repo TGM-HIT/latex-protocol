@@ -9,7 +9,7 @@ Option | Result
 `nobib` | Disable bibliography
 `nofonts` | Change font to default
 `noglo` | Disable acronyms and glossary
-`nologo` | Disable logos on titlepage
+`nologos` | Disable logos on titlepage
 `notitle` | Disable titlepage
 `notoc` | Disable table of contents
 `notable` | Disable table on titlepage

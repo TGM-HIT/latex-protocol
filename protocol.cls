@@ -18,8 +18,8 @@
 \DeclareOption{notable}{\tablefalse}
 
 % ## Do not print logos
-\newif\iflogo\logotrue
-\DeclareOption{nologo}{\logofalse}
+\newif\iflogos\logostrue
+\DeclareOption{nologos}{\logosfalse}
 
 % ## Use default latex fonts
 \newif\iffonts\fontstrue
@@ -121,16 +121,22 @@
 % # Variables
 \newcommand\@mysubtitle{}   % Untertitel
 \newcommand\mysubtitle[1]{\renewcommand\@mysubtitle{#1}}
+
 \newcommand\@mysubject{}    % Systemtechnik Labor
 \newcommand\mysubject[1]{\renewcommand\@mysubject{#1}}
+
 \newcommand\@mycourse{}     % 5xHIT 2017/18, Gruppe A
 \newcommand\mycourse[1]{\renewcommand\@mycourse{#1}}
+
 \newcommand\@myteacher{}    % Michel Borko
 \newcommand\myteacher[1]{\renewcommand\@myteacher{#1}}
+
 \newcommand\@myversion{}    % 1.0
 \newcommand\myversion[1]{\renewcommand\@myversion{#1}}
+
 \newcommand\@mybegin{}      % 31.1.2018
 \newcommand\mybegin[1]{\renewcommand\@mybegin{#1}}
+
 \newcommand\@myfinish{}     % 1.2.2018
 \newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
 
@@ -170,9 +176,11 @@
 % ## Title
 \makeatletter
 \renewcommand\@maketitle{
-    \iflogo~\\              % Print logos
-        \IfFileExists{img/tgm-logo.png}{\includegraphics[height=2cm]{img/tgm-logo.png}}{}\hfill
-        \IfFileExists{img/hit-logo.png}{\includegraphics[height=2cm]{img/hit-logo.png}}{}\fi
+    \iflogos~\\              % Print logos
+        \IfFileExists{images/tgm-logo.png}
+            {\includegraphics[height=2cm]{images/tgm-logo.png}}{}\hfill
+        \IfFileExists{images/hit-logo.png}
+            {\includegraphics[height=2cm]{images/hit-logo.png}}{}\fi
 
     \vskip 1cm              % Minimum margin
     \iflandscape\else       % Do not increase margin on landscape
