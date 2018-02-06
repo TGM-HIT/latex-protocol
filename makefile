@@ -108,6 +108,15 @@ endif
 	@$(MAKE) clean
 
 
+minted:
+	@pygmentize -V && echo "Pygments is already installed!"; return false;
+	@echo "$(ecO)WARNING:$(ecO) This target will check for a python runtime and pip install Pygments. \
+		If you are using a unix-like system you might want to query your package manager first!"
+	@python --version || echo "Minted requires the Python runtime. Go get it from https://www.python.org/downloads/"; return false;
+	@echo "$(ecG)Installing $(ecC)Pygments$(eR) using pip"
+	@pip install Pygments
+
+
 FILES = $(filter-out $(wildcard lst*.tex glo*.tex _*.tex), $(wildcard *.tex))
 all:
 	@echo -e "$(ecG)Run $(eR)target $(ecC)all $(eR)on $(ecP).$(eR)"
