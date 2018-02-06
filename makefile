@@ -130,6 +130,6 @@ ifneq (.,$(BUILD))
 	@echo -e "$(ecG)Get $(ecC)pdf $(eR)from $(ecP)$(BUILD)$(eR)"
 	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
 	rm -rf $(BUILD)
-endif	
-	rm -f *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
+endif
+	rm -rf *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
 	rm -rf _minted*

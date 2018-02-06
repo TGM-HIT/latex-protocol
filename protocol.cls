@@ -115,7 +115,7 @@
     \RequirePackage{listing}                % Already defined by minted itself
     \RequirePackage{listings}
     \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
-    \IfFileExists{lst.tex}{\input{lst}}{}   % Load lstlistings config if exists
+    \IfFileExists{.listings.tex}{\input{.listings}}{}   % Load lstlistings config if exists
 \fi
 
 % # Variables
@@ -169,8 +169,8 @@
 
 
 % ## Add glossary / bibliography entries if they exist
-\IfFileExists{glo.tex}{\input{glo}\makeglossaries}{}
-\IfFileExists{bib.bib}{\addbibresource{bib}}{}
+\IfFileExists{glossaries.tex}{\input{glossaries}\makeglossaries}{}
+\IfFileExists{bibliography.bib}{\addbibresource{bibliography}}{}
 
 % # Makros
 % ## Title
