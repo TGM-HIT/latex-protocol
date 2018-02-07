@@ -1,12 +1,11 @@
 # A Latex Protocol Template
-## Table of Contents
 
-* [Usage](#Usage)
-	* [Make](#Make)
-	* [PdfLatex](#PdfLatex)
-	* [TexStudio](#TexStudio)
-* [Options](#Options)
-* [Variables](#Variables)
+- [Usage](#Usage)
+	- [Make](#Make)
+	- [PdfLatex](#PdfLatex)
+	- [TexStudio](#TexStudio)
+- [Options](#Options)
+- [Variables](#Variables)
 
 ## Usage
 ### Make
