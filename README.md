@@ -19,9 +19,9 @@ and all `.tex` files which do not start with `glo`, `lst` or `_` will be compile
 When `make` is not available you can also run
 ```sh
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Initial compilation
-makeglossaries protocol 	# Compile glossaries
+makeglossaries protocol 					# Compile glossaries
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for glossaries
-bibtex protocol 	# Compile bibliography
+bibtex protocol 						# Compile bibliography
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 ```
