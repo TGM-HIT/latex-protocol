@@ -1,11 +1,11 @@
 # A Latex Protocol Template
 
-- [Usage](#Usage)
-	- [Make](#Make)
-	- [PdfLatex](#PdfLatex)
-	- [TexStudio](#TexStudio)
-- [Options](#Options)
-- [Variables](#Variables)
+- [Usage](#usage)
+	- [Make](#make)
+	- [PdfLatex](#pdflatex)
+	- [TexStudio](#texstudio)
+- [Options](#options)
+- [Variables](#variables)
 
 ## Usage
 ### Make
