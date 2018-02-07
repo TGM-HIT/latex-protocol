@@ -149,7 +149,12 @@ Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 \begin{listing}
 \ifminted   \codeline{tex}{\begin{code}[]{java}}
 \else       \codeline{tex}{\\begin\{code\}[]\{java\}}\fi
-\inputcode[firstnumber=last]{java}{code.java}
+\begin{code}[firstnumber=last]{java}
+// Ich bin ein Kommantar!
+public static void main(String[] args) {
+    System.out.println("Ich bin ein Array!")
+}
+\end{code}
 \ifminted   \codeline[firstnumber=last]{tex}{\end{code}}
 \else       \codeline[firstnumber=last]{tex}{\\end\{code\}}\fi
 
@@ -168,7 +173,12 @@ eingefügt werden.
 \begin{listing}
 \ifminted   \codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
 \else       \codeline{tex}{\\begin\{lstlisting\}[language=Java, caption=Java Lstlisting]}\fi
-\inputcode[firstnumber=last]{java}{code.java}
+\begin{code}[firstnumber=last]{java}
+// Ich bin ein Kommantar!
+public static void main(String[] args) {
+    System.out.println("Ich bin ein Array!")
+}
+\end{code}
 \ifminted   \codeline[firstnumber=last]{tex}{\end{lstlisting}}
 \else       \codeline[firstnumber=last]{tex}{\\end\{lstlisting\}}\fi
 \caption{Java Lstlisting}
@@ -182,7 +192,12 @@ Benötigt die Option \texttt{minted}.
 \begin{listing}
 \ifminted   \codeline{tex}{\begin{minted}[options]{java}}
 \else       \codeline{tex}{\\begin\{minted\}[]\{java\}}\fi
-\inputcode[firstnumber=last]{java}{code.java}
+\begin{code}[firstnumber=last]{java}
+// Ich bin ein Kommantar!
+public static void main(String[] args) {
+    System.out.println("Ich bin ein Array!")
+}
+\end{code}
 \ifminted   \codeline[firstnumber=last]{tex}{\end{minted}}
 \else       \codeline[firstnumber=last]{tex}{\\end\{minted\}}\fi
 \caption{Minted Umgebung}

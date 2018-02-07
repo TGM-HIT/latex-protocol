@@ -143,6 +143,6 @@ ifneq (.,$(BUILD))
 endif
 	rm -rf *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
 	rm -rf _minted*
-ifeq (true, LOG)
+ifneq (true, $(LOG))
 	rm -rf *.log
 endif

@@ -115,7 +115,7 @@
     \RequirePackage{listing}                % Already defined by minted itself
     \RequirePackage{listings}
     \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
-    \IfFileExists{.listings.tex}{\input{.listings}}{}   % Load lstlistings config if exists
+    \IfFileExists{.lst.tex}{\input{.lst}}{} % Load lstlistings config if exists
 \fi
 
 \RequirePackage{csquotes}	% csquotes should be loaded after fvextra, to avoid a warning from the lineno package
