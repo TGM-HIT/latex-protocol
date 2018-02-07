@@ -63,7 +63,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[ngerman]{babel}
-\RequirePackage{ccicons, csquotes, amssymb, mathtools}
+\RequirePackage{ccicons, amssymb, mathtools}
 
 \RequirePackage{fancyhdr, float, multicol, multirow, titling}
 \RequirePackage[marginal, norule, perpage]{footmisc}
@@ -117,6 +117,8 @@
     \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
     \IfFileExists{.listings.tex}{\input{.listings}}{}   % Load lstlistings config if exists
 \fi
+
+\RequirePackage{csquotes}	% csquotes should be loaded after fvextra, to avoid a warning from the lineno package
 
 % # Variables
 \newcommand\@mysubtitle{}   % Untertitel

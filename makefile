@@ -7,6 +7,7 @@ ecO = \e[0;33m
 ecP = \e[0;35m
 ecC = \e[0;36m
 # constants
+LOG = false
 BUILD = .
 ERRLINES = 1
 
@@ -18,6 +19,15 @@ else
 	@echo -e "$(ecG)Run $(ecC)all $(eR)on $(ecP). $(eR)by default"
 	$(MAKE) all
 endif
+
+
+latex:
+	@echo -e "$(ecG)Make $(ecC)latex$(eR) for $(ecP)$(f)$(eR)"
+ifneq (.,$(BUILD))
+	@mkdir -p $(BUILD)
+endif
+	@latex -shell-escape -file-line-error -interaction=batchmode -output-directory=$(BUILD) $(f) || echo -e "$(ecR)Error running $(ecC)pdflatex$(ecR)!$(eR)"
+	@grep ".*:[0-9]*:.*" $(BUILD)/$(f).log -A$(ERRLINES) && { false; } || { echo -e "$(ecG)Everything OK!$(eR)"; }
 
 
 pdf:
@@ -131,5 +141,8 @@ ifneq (.,$(BUILD))
 	@cp $(BUILD)/$(f).pdf $(f).pdf || echo -e "$(ecR)Missing $(ecP)$(f).pdf$(eR)"
 	rm -rf $(BUILD)
 endif
-	rm -rf *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.log *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
+	rm -rf *.acn *.acr *.alg *.aux *.bbl *.blg *-blx.bib *.bcf *.dvi *.glg *.glo *.gls *.glsdefs *.ist *.out *.run.xml *.synctex.gz *.toc *.xdy *.lot *.lof *.lol
 	rm -rf _minted*
+ifeq (true, LOG)
+	rm -rf *.log
+endif
