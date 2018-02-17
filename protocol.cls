@@ -250,15 +250,18 @@
         \begin{minted}[#1]{#2}%
     }{  \end{minted}}
 
-    \newcommand\codein{\mintinline}                         % Inline code (alias)
-    \newcommand\inputcode{\inputminted}                     % Input code (alias)
+    \newcommand\codein{\mintinline}         % Inline code (alias)
+    \newcommand\codeinline{\codein}         % Alias for @kevsoft
+
+    \newcommand\inputcode{\inputminted}     % Input code (alias)
 
     \newcommand\codeline[3][]{\mint[#1]{#2}\relax#3\relax}  % Single line of code
 \else       % Listings goes here
     \newcommand\setcode[1]{\lstset{#1}}                         % Code settings
     \lstnewenvironment{code}[2][]{\lstset{language={#2},#1}}{}  % Code environment
 
-    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}               % Inline code
+    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}   % Inline code
+    \newcommand\codeinline{\codein}                                     % Alias for @kevsoft
     \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{\detokenize{#3}}}   % Input code
 
     \newcommand\codeline[3][]{\begin{flushleft}
