@@ -118,7 +118,7 @@ endif
 	@$(MAKE) clean
 
 
-minted:
+pygments:
 	@pygmentize -V && echo "Pygments is already installed!"; return false;
 	@echo "$(ecO)WARNING:$(ecO) This target will check for a python runtime and pip install Pygments. \
 		If you are using a unix-like system you might want to query your package manager first!"

@@ -33,6 +33,10 @@
 \newif\ifbib\bibtrue
 \DeclareOption{nobib}{\bibfalse}
 
+% ## Skip line instead of indent after blank line
+\newif\ifparskip\parskipfalse
+\DeclareOption{parskip}{\parskiptrue}
+
 % ## Use minted package
 \newif\ifminted\mintedfalse
 \DeclareOption{minted}{\mintedtrue}
@@ -78,8 +82,14 @@
 % ## Count list items for lists
 \RequirePackage[figure,table,listing]{totalcount}
 
+% ## Skip lines instead of indents after a blank line
+\ifparskip\RequirePackage[parfill]{parskip}\fi
+
 % ## Glossaries
-\ifglo\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}\fi
+\ifglo
+    \RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
+    \makeglossaries
+\fi
 
 % ## Bibliography
 \ifbib  \ifnatbib\RequirePackage{natbib}    % Choose backend
@@ -194,7 +204,7 @@
         \if\relax\@mysubject\relax\else     {\Large\@mysubject}     ~\\\vspace{0.5em}\fi
         \if\relax\@mycourse\relax\else      \@mycourse              ~\\\vspace{2em}\fi
         {\Huge\textbf\thetitle}                                     ~\\\vspace{1em}
-        \if\relax\@mysubtitle\relax\else    {\LARGE\@mysubtitle}    ~\\\vspace{2em}\fi
+        \if\relax\@mysubtitle\relax\else    {\LARGE\@mysubtitle}\fi ~\\\vspace{2em}
         \theauthor                                                  ~\\\vspace{0.5em}
         \@date
     \end{center}
