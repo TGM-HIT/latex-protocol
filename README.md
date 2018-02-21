@@ -51,6 +51,7 @@ Option | Result
 `notitle` | Disable titlepage
 `notoc` | Disable table of contents
 `notable` | Disable table on titlepage
+`parskip` | Skip line instead of indent after blank line
 
 ## Variables
 Variables can be set as commands like
