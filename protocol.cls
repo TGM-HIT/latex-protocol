@@ -105,8 +105,8 @@
 % ## Require and configure minted or listings
 \ifminted
     \RequirePackage[newfloat]{minted}
-    \floatplacement{listing}{H} % Override default listing float
-    \usemintedstyle{tango}      % autumn, rainbow_dash, tango, trac
+    \floatplacement{listing}{H} 	% Override default listing float
+    \usemintedstyle{rainbow_dash}	% autumn, rainbow_dash, tango, trac
     \setminted{ fontsize=\small,
                 linenos=true,
                 breakanywhere=true,
