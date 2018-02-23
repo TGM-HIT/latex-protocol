@@ -92,13 +92,13 @@
 \fi
 
 % ## Bibliography
-\ifbib  \ifnatbib\RequirePackage{natbib}    % Choose backend
-        \else\RequirePackage[backend=bibtex]{biblatex}\fi\fi
+\ifbib  \ifnatbib\RequirePackage{natbib}\bibliographystyle{ieeetr}  % Choose backend
+        \else\RequirePackage[backend=bibtex, style=numeric]{biblatex}\fi\fi
 
 % ## Colors
 \definecolor{MyLightGray}{RGB}{252,252,252}
-\definecolor{MyBlue}{RGB}{33,74,135}
-\definecolor{MyGreen}{RGB}{79,153,5}
+\definecolor{MyBlue}{RGB}{5,102,141}
+\definecolor{MyGreen}{RGB}{0,168,150}
 \definecolor{MyBrown}{RGB}{143,89,3}
 \definecolor{MyOrange}{RGB}{213,111,30}
 
