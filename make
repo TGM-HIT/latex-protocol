@@ -14,8 +14,8 @@ import argparse
 import sys
 
 from glob import glob
-from os import getcwd, listdir, remove
-from os.path import expanduser, join, isdir
+from os import getcwd, remove
+from os.path import isfile
 from shutil import copyfile, rmtree
 from subprocess import call
 
@@ -39,18 +39,18 @@ TMP = [[
 def bibtex(file="main"):
     cmd = ("bibtex", file)
     if call(tuple(cmd)) < 1:
-        print(CG + "Everything okay with " + CP + "bibtex" + R + "!")
+        print(CG + "Everything okay with " + CP + "bibtex" + R)
     else:
-        print(CR + "Bibtex finished with errors!" + R)
+        print(CR + "Bibtex finished with errors" + R)
 
 
 def glossaries(file="main", out="."):
-    print(CB + "Run " + CP + "makeglossaries" + R + "on " + CC + file + ".glo" + R)
+    print(CB + "Run " + CP + "makeglossaries" + R + " on " + CC + file + ".glo" + R)
     cmd = ("makeglossaries", "-d", out, file)
     if call(tuple(cmd)) < 1:
-        print(CG + "Everything okay with " + CP + "makeglossaries" + R + "!")
+        print(CG + "Everything okay with " + CP + "makeglossaries" + R)
     else:
-        print(CR + "Makeglossaries finished with errors!" + R)
+        print(CR + "Makeglossaries finished with errors" + R)
 
 
 def tex(*args, command="pdflatex", file="main", mode="batchmode", out="."):
@@ -63,9 +63,9 @@ def tex(*args, command="pdflatex", file="main", mode="batchmode", out="."):
            *args, file]
 
     if call(tuple(cmd)) < 1:
-        print(CG + "Everything okay!" + R)
+        print(CG + "Everything okay with " + CP + command + R)
     else:
-        print(CR + command + " finished with errors!" + R)
+        print(CR + command + " finished with errors" + R)
 
 
 def clean(recursive=True):
@@ -78,10 +78,12 @@ def clean(recursive=True):
 
 def full(*args, command="pdflatex", file="main", mode="batchmode", out="."):
     tex(*args, command=command, file=file, mode=mode, out=out)
-    bibtex(file=file)
+    if len(glob("*.bib")) > 0:   # bib files can have different names than the main file
+        bibtex(file=file)
     tex(*args, command=command, file=file, mode=mode, out=out)
     tex(*args, command=command, file=file, mode=mode, out=out)
-    glossaries(file=file, out=out)
+    if isfile(file + ".glo"):
+        glossaries(file=file, out=out)
     tex(*args, command=command, file=file, mode=mode, out=out)
     clean()
 
@@ -93,21 +95,22 @@ def parse(args):
     out = args.out or "."
     arguments = args.args.split(" ") if args.args else []
 
-    if not args.log:
-        TMP[0].append("**/*.log")
-
-    if "clean" in args.target:
-        clean()
-        return
-
     if args.latex:
         command = "latex"
     if args.pdf:
         command = "pdflatex"
     if args.xelatex:
         command = "xelatex"
-    # Compile given files
-    [full(*arguments, command=command, file=file, mode=mode, out=out) for file in files]
+    # add log files to temporary file list if no argument is given
+    if not args.log:
+        TMP[0].append("**/*.log")
+    # decide on a target
+    if "clean" in args.target:
+        clean()
+    elif "draft" in args.target:
+        [tex(*arguments, command=command, file=file, mode=mode, out=out) for file in files]
+    else:   # Attempt a full compilation by default
+        [full(*arguments, command=command, file=file, mode=mode, out=out) for file in files]
 
 
 if __name__ == "__main__":
@@ -118,7 +121,7 @@ if __name__ == "__main__":
     # add arguments for different use-cases
     parser.add_argument("target", nargs="?", default="all",
                         help="the operation to use is picked by observing the given files and parameters."
-                             " To set one by hand simply append a target from [clean].")
+                             " To set one by hand simply append a target from [clean, draft].")
     parser.add_argument("files", nargs="*", default="main", help="source tex files to compile")
     parser.add_argument("-l", "--log", help="spare log files during cleanup", action="store_true")
     parser.add_argument("-q", "--quiet", help="only show fatal errors", action="store_true")
