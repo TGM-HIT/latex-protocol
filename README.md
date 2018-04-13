@@ -1,22 +1,22 @@
 # A Latex Protocol Template
 
 - [Usage](#usage)
-	- [Make](#make)
-	- [PdfLatex](#pdflatex)
+	- [Latex](#latex)
 	- [TexStudio](#texstudio)
 - [Options](#options)
 - [Variables](#variables)
 
 ## Usage
-### Make
-If the command is available simply run
+With python and latex installed you can easilily compile your project using the `make` script.
+It simplifies the compilation progress, handles multiple source files and removes unnecessary files.
+For most use-cases you only have to run
 ```sh
-make
+python make
 ```
-and all `.tex` files which do not start with `glo`, `lst` or `_` will be compiled for both glossaries and bibliography.
+which compiles the `main.tex` file using `pdflatex` while looking for bibliography and glossary entries.
 
-### PdfLatex
-When `make` is not available you can also run
+### Latex
+If (for some reason) you do not want to depend on the `make` script you can also use `pdflatex`, `makeglossaries` and `bibtex` from the shell.
 ```sh
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Initial compilation
 makeglossaries protocol 					# Compile glossaries
@@ -25,7 +25,6 @@ bibtex protocol 						# Compile bibliography
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 ```
-to fully compile the `protocol.tex` file provided by default.
 
 ### TexStudio
 If using TexStudio you might want to add a custom user command in `Options` &rarr; `Configure TexStudio` &rarr; `Build` &rarr; `User Commands`. Add the following line to completely compile a LaTeX file with glossaries, bibliography and also minted.
@@ -33,9 +32,9 @@ If using TexStudio you might want to add a custom user command in `Options` &rar
 pdflatex -shell-escape -interaction=nonstopmode % | txs:///makeglossaries | pdflatex -shell-escape -interaction=nonstopmode % | txs:///bibtex | pdflatex -shell-escape -interaction=nonstopmode % | pdflatex -shell-escape -interaction=nonstopmode % | txs:///view-pdf-internal --embedded
 ```
 
-Of course you can also add `make` as a user command but you might want to set the variable `LOG=true` so TexStudio can find your logfile after cleanup.
+Of course you can also add the `make` script as a user command but you might want to set the variable `-l` so TexStudio can find your logfile after cleanup.
 ```sh
-make LOG=true | txs:///view-pdf-internal --embedded
+python make -l | txs:///view-pdf-internal --embedded
 ```
 
 ## Options

@@ -143,11 +143,15 @@ def parse(args):
     if not args.log:
         TMP[0].append("**/*.log")
     # decide on a target
-    if "clean" in args.target:      # clean up files and directories listed in the TMP constant
+    if "clean" in args.target:          # clean up files and directories listed in the TMP constant
         clean()
-    elif "draft" in args.target:    # run the tex command once
+    elif "draft" in args.target:        # run the tex command once
         [tex(*arguments, command=command, file=file, interaction=interaction, out=out) for file in files]
-    else:                           # attempt a full compilation by default
+    elif "glossaries" in args.target:   # compile glossary entries
+        [glossaries(file=file, out=out) for file in files]
+    elif "bibtex" in args.target:       # compile bibliography entries using bibtex
+        [glossaries(file=file, out=out) for file in files]
+    else:                               # attempt a full compilation by default
         [full(*arguments, command=command, file=file, interaction=interaction, out=out) for file in files]
 
 
@@ -161,15 +165,15 @@ if __name__ == "__main__":
                         help="the operation to use is picked by observing the given files and parameters."
                              " To set one by hand simply append a target from [clean, draft].")
     parser.add_argument("files", nargs="*", default="main", help="source tex files to compile")
-    parser.add_argument("-l", "--log", help="spare log files during cleanup", action="store_true")
-    parser.add_argument("-q", "--quiet", help="only show fatal errors", action="store_true")
-    parser.add_argument("-v", "--verbose", help="enable extended logging for commands", action="store_true")
+    parser.add_argument("-l", "--log", action="store_true", help="spare log files during cleanup")
+    parser.add_argument("-q", "--quiet", action="store_true", help="only show fatal errors")
+    parser.add_argument("-v", "--verbose", action="store_true", help="enable extended logging for commands")
     parser.add_argument("-a", "--args", help="additional arguments for the operation")
     parser.add_argument("-o", "--out", help="output directory to use if supported by the operation")
     # only allow a single compiler
     compilers = parser.add_argument_group("latex compilers").add_mutually_exclusive_group()
-    compilers.add_argument("-t", "--latex", help="use latex to parse tex files", action="store_true")
-    compilers.add_argument("-x", "--xelatex", help="use xelatex to compile pdfs from tex sources", action="store_true")
-    compilers.add_argument("-p", "--pdf", help="use pdflatex to produce pdfs from tex sources", action="store_true")
+    compilers.add_argument("-t", "--latex", action="store_true", help="use latex to parse tex files")
+    compilers.add_argument("-x", "--xelatex", action="store_true", help="use xelatex to compile pdfs from tex sources")
+    compilers.add_argument("-p", "--pdf", action="store_true", help="use pdflatex to produce pdfs from tex sources")
     # parse arguments
     parse(parser.parse_args())
