@@ -1,4 +1,4 @@
-# A Latex Protocol Template
+# A latex protocol template
 
 - [Usage](#usage)
 	- [Latex](#latex)
@@ -7,8 +7,14 @@
 - [Variables](#variables)
 
 ## Usage
-With python and latex installed you can easilily compile your project using the `make` script.
-It simplifies the compilation progress, handles multiple source files and removes unnecessary files.
+It is recommended to clone the `latex-protocol` repository using
+```sh
+git clone git@github.com:tgm-hit/latex-protocol.git [directory]
+cd [directory]
+```
+where [directory] is the folder you want to store the protocol in.
+
+With python and latex installed you can easilily compile your project using the `make` script which simplifies the compilation progress, handles multiple source files and removes unnecessary files.
 For most use-cases you only have to run
 ```sh
 python make
@@ -36,6 +42,9 @@ Of course you can also add the `make` script as a user command but you might wan
 ```sh
 python make -l | txs:///view-pdf-internal --embedded
 ```
+
+### ShareLatex
+[ShareLatex](https://www.sharelatex.com/project) is a popular online latex editor and is also fully supported by this template.
 
 ## Options
 Option | Result
