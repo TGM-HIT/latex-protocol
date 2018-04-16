@@ -1,7 +1,7 @@
-% ====================
-% :: LaTeX Protocol ::
-% ====================
-%
+% ==================== %
+% :: LaTeX Protocol :: %
+% ==================== %
+
 % LaTeX class for protocols designed for the HIT department at TGM Vienna.
 % Thanks to @chro and @mborko for the previous templates and support!
 %
@@ -11,11 +11,15 @@
 
 
 \ProvidesClass{protocol}
-% -------------
-% :: Options ::
-% -------------
+% ------------- %
+% :: Options :: %
+% ------------- %
+\newif\ifen\enfalse             	% English language
+\DeclareOption{en}{\entrue}
 \newif\iflandscape\landscapefalse	% Landscape orientation
 \DeclareOption{landscape}{\landscapetrue\PassOptionsToClass{landscape}{article}}
+\newif\ifcolor\colortrue			% No coloured links
+\DeclareOption{nocolor}{\colorfalse}
 \newif\iftitle\titletrue			% No title page
 \DeclareOption{notitle}{\titlefalse}
 \newif\iftoc\toctrue				% No table of contents
@@ -46,24 +50,25 @@
 }{  \LoadClass[a4paper,10pt]{article}}  % Default
 
 
-% --------------
-% :: Packages ::
-% --------------
+% -------------- %
+% :: Packages :: %
+% -------------- %
 \iffonts	% Load correct fonts when available
 	\ifsans	\renewcommand*\familydefault{\sfdefault}
 	\else	\IfFileExists{crimson.sty}{\RequirePackage{crimson}}{}\fi
     \IfFileExists{inconsolate.sty}{\RequirePackage{inconsolata}}{}
 \fi
-
-% Require landscape geometry
+% Require landscape geometry and use smaller margins
 \iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
-\else			\RequirePackage{a4wide}\fi
-
+\else			\RequirePackage{a4wide, geometry}\fi
+% Font settings, language support and symbols
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage[ngerman]{babel}
-\RequirePackage{ccicons, amssymb, mathtools}
-
+\RequirePackage{ccicons, csquotes, amssymb, mathtools}
+% Language
+\ifen 	\RequirePackage[ngerman, english]{babel}
+\else 	\RequirePackage[english, ngerman]{babel}\fi
+% Additional content, commands and settings
 \RequirePackage{fancyhdr, float, multicol, multirow, titling}
 \RequirePackage[marginal, norule, perpage]{footmisc}
 \RequirePackage[dvipsnames]{xcolor}
@@ -73,33 +78,54 @@
 \RequirePackage{graphicx, subcaption}
 \RequirePackage[font=small]{caption}
 \RequirePackage{accsupp}    % [1]
-
-% ## Count list items for lists
+% Count list items for lists
 \RequirePackage[figure,table,listing]{totalcount}
+% Skip lines instead of indents after a blank line
+\ifparskip\RequirePackage{parskip}\fi
 
-% ## Skip lines instead of indents after a blank line
-\ifparskip\RequirePackage[parfill]{parskip}\fi
+% Glossaries
+\ifglo 	\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
+		\makeglossaries\fi
 
-% ## Glossaries
-\ifglo
-    \RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
-    \makeglossaries
-\fi
+\ifbib  \ifnatbib\RequirePackage{natbib}	% Bibliography
+        \else\RequirePackage[backend=bibtex]{biblatex}\fi\fi
 
-% ## Bibliography
-\ifbib  \ifnatbib\RequirePackage{natbib}\bibliographystyle{ieeetr}  % Choose backend
-        \else\RequirePackage[backend=bibtex, style=numeric]{biblatex}\fi\fi
+\ifminted\RequirePackage[newfloat]{minted}  % Code listings
+\else\RequirePackage{listing}               % Already defined by minted itself
+     \RequirePackage{listingsutf8}\fi       % UTF-8 Input support for listings
 
-% ## Colors
+
+% --------------- %
+% :: Variables :: %
+% --------------- %
+\newcommand\@mysubtitle{}	% Optional subtitle
+\newcommand\mysubtitle[1]{\renewcommand\@mysubtitle{#1}}
+\newcommand\@mysubject{}    % Subject, class or topic
+\newcommand\mysubject[1]{\renewcommand\@mysubject{#1}}
+\newcommand\@mycourse{}     % Course, group or team
+\newcommand\mycourse[1]{\renewcommand\@mycourse{#1}}
+\newcommand\@myteacher{}    % Supporting teacher or supervisor
+\newcommand\myteacher[1]{\renewcommand\@myteacher{#1}}
+\newcommand\@myversion{}    % Current version of the document (x.x or yy.mm.xx)
+\newcommand\myversion[1]{\renewcommand\@myversion{#1}}
+\newcommand\@mybegin{}      % Start of work or its documentation
+\newcommand\mybegin[1]{\renewcommand\@mybegin{#1}}
+\newcommand\@myfinish{}     % End of work or its documentation
+\newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
+
+% :: Colours :: %
 \definecolor{MyLightGray}{RGB}{252,252,252}
 \definecolor{MyBlue}{RGB}{5,102,141}
 \definecolor{MyGreen}{RGB}{0,168,150}
 \definecolor{MyBrown}{RGB}{143,89,3}
 \definecolor{MyOrange}{RGB}{213,111,30}
 
-% ## Require and configure minted or listings
-\ifminted
-    \RequirePackage[newfloat]{minted}
+% ------------------- %
+% :: Configuration :: %
+% ------------------- %
+
+% :: Listings :: %
+\ifminted							% Configure minted
     \floatplacement{listing}{H} 	% Override default listing float
     \usemintedstyle{rainbow_dash}	% autumn, rainbow_dash, tango, trac
     \setminted{ fontsize=\small,
@@ -108,59 +134,25 @@
                 breaklines=true,
                 framesep=2mm,
                 tabsize=4}
-
-    % ## [1] Avoid copying line numbers on listings
+    % [1] Avoid copying line numbers on listings
     \renewcommand\theFancyVerbLine{
         \BeginAccSupp{method=escape,ActualText={}}
         {\rmfamily\tiny\arabic{FancyVerbLine}}
         \EndAccSupp{}
     }
-    \SetupFloatingEnvironment{listing}{listname=Auflistungsverzeichnis,name=Auflistung}
-\else
-    \RequirePackage{listing}                % Already defined by minted itself
-    \RequirePackage{listings}
-    \RequirePackage{listingsutf8}           % UTF-8 Input support for listings
-    \IfFileExists{.lst.tex}{\input{.lst}}{} % Load lstlistings config if exists
-\fi
+    % Change listings for German users
+    \ifen\else\SetupFloatingEnvironment{listing}{
+    	listname=Auflistungsverzeichnis,name=Auflistung
+    }\fi
+\else\IfFileExists{.lst.tex}{\input{.lst}}{}\fi % Load listings config if exists
 
-\RequirePackage{csquotes}	% csquotes should be loaded after fvextra, to avoid a warning from the lineno package
+% :: Hyperlinks :: %
+\ifcolor 	\hypersetup{breaklinks=true, colorlinks=true,   	% Recolour links
+                    	linkcolor=MyBlue, urlcolor=MyBlue, citecolor=MyBlue}
+\else 		\hypersetup{breaklinks=true, colorlinks=false,  	% Remove colours
+                    	linkcolor=Black, urlcolor=Black, citecolor=Black}\fi
 
-% # Variables
-\newcommand\@mysubtitle{}   % Untertitel
-\newcommand\mysubtitle[1]{\renewcommand\@mysubtitle{#1}}
-
-\newcommand\@mysubject{}    % Systemtechnik Labor
-\newcommand\mysubject[1]{\renewcommand\@mysubject{#1}}
-
-\newcommand\@mycourse{}     % 5xHIT 2017/18, Gruppe A
-\newcommand\mycourse[1]{\renewcommand\@mycourse{#1}}
-
-\newcommand\@myteacher{}    % Michel Borko
-\newcommand\myteacher[1]{\renewcommand\@myteacher{#1}}
-
-\newcommand\@myversion{}    % 1.0
-\newcommand\myversion[1]{\renewcommand\@myversion{#1}}
-
-\newcommand\@mybegin{}      % 31.1.2018
-\newcommand\mybegin[1]{\renewcommand\@mybegin{#1}}
-
-\newcommand\@myfinish{}     % 1.2.2018
-\newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
-
-% # Package configuration
-\newcolumntype{Y}{p{.5\textwidth}}  % TabularX
-
-\floatplacement{table}{H}   % Override default table float
-\floatplacement{figure}{H}  % Override default figure float
-
-\hypersetup{breaklinks=true, colorlinks=true,   % Hyperlinks
-            linkcolor=MyBlue, urlcolor=MyBlue, citecolor=MyBlue}
-
-% ## Footnotes
-\def\arraystretch{1.5}
-\renewcommand\thefootnote{\Roman{footnote}}
-
-% ## Header
+% :: Headers :: %
 \pagestyle{fancy}\fancyhf{}
 
 \makeatletter
@@ -171,16 +163,24 @@
 \fancyfoot[C]{\small \@mycourse}
 \fancyfoot[R]{\small \thepage~/~{\lastpageref*{VeryLastPage}}}
 \makeatother
-
+% Adjust foot rule width (cannot be set explicitly)
 \renewcommand{\footrulewidth}{\headrulewidth}
-
-
-% ## Add glossary / bibliography entries if they exist
+% Add glossary / bibliography entries if they exist
 \IfFileExists{glossaries.tex}{\input{glossaries}\makeglossaries}{}
 \IfFileExists{bibliography.bib}{\addbibresource{bibliography}}{}
 
-% # Makros
-% ## Title
+% :: Hacks :: %
+\def\arraystretch{1.5}      				% Increase table cell spacing
+\floatplacement{table}{H}   				% Adjust default table float
+\floatplacement{figure}{H}  				% Adjust default figure float
+\newcolumntype{Y}{p{.5\textwidth}}  		% Half page TabularX column
+\renewcommand\thefootnote{\Roman{footnote}}	% Roman footnotes
+
+% ------------ %
+% :: Macros :: %
+% ------------ %
+
+% :: Title :: %
 \makeatletter
 \renewcommand\@maketitle{
     \iflogos~\\              % Print logos
@@ -274,23 +274,24 @@
     \end{flushleft}}
 \fi
 
-% ## Add common commands at the beginning of the document
+% :: Begin Document :: %
+% Add common commands at the beginning of the document
 \AtBeginDocument{
     \pagenumbering{arabic}                      % Required by pageslts
-    \iftitle\maketitle\thispagestyle{empty}\fi  % Titlepage
+    \iftitle 	\newgeometry{left=1in, right=1in, top=.75in, bottom=.75in}
+    			\maketitle\thispagestyle{empty} % Print title on a clean page
+    			\restoregeometry\fi 			% Restore geometry
     \iftable\maketable\fi                       % Version table
     \iftoc\tableofcontents\glsresetall\fi       % Table of contents
 }
 
-% ## Add common commands at the end of the document
+% :: End Document :: %
+% Add common commands at the end of the document
 \AtEndDocument{
-    \ifglo  % Print glossaries
-        % \glsaddall                % Also list unused glossary entries
-        \printglossaries\fi         % List used glossary entries
-
-    \ifbib  % Print bibliography
-        \ifnatbib\bibliography{bib} % List bibliography entries with natbib
-        \else\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]\fi\fi
+    \ifglo\printglossaries\fi 				% List used glossary entries
+    \ifbib 	\ifnatbib\bibliography{bib} 	% List bibliography entries with NatBib
+    \else 	\ifen\printbibliography[heading=bibintoc]
+            \else\printbibliography[heading=bibintoc, title=Literaturverzeichnis]\fi\fi
     % List lists if not empty
     \iftotalfigures\listoffigures\fi
     \iftotaltables\listoftables\fi
