@@ -8,7 +8,7 @@
 Helps building LaTeX documents on multiple platforms.
 
 @author     Markus Re1 <markus@re1.at>
-@version    2018-04-16
+@version    2018-04-17
 """
 
 import argparse
@@ -39,6 +39,7 @@ TMP = [["**/*.acn", "**/*.acr", "**/*.alg", "**/*.aux", "**/*.bbl", "**/*.blg", 
 def bibtex(file="main", skip=False) -> bool:
     """
     Compile bibliography found in the given file using bibtex
+
     :param skip: always return True
     :param file: filename of a tex source file without its extension
     :return: True on success or False on error
@@ -56,6 +57,7 @@ def bibtex(file="main", skip=False) -> bool:
 def glossaries(file="main", out=".", skip=False) -> bool:
     """
     Compile glossary entries found in the given file using makeglossaries
+
     :param skip: always return true
     :param file: filename of a tex source file without its extension
     :param out: path to copy compiled glossaries into
@@ -74,6 +76,7 @@ def glossaries(file="main", out=".", skip=False) -> bool:
 def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=False) -> bool:
     """
     Compiles a tex source file using the given command
+
     :param skip: always return true
     :param args: additional arguments passed to the tex command
     :param command: tex command used to compile the source files
@@ -110,6 +113,7 @@ def clean(recursive=True):
     """
     Clean up directory by removing any file listed in the TMP[0] constant
     and any directory listed in the TMP[1] constant
+
     :param recursive: also delete files from subdirectories when using **
     """
     print(CB + "Run " + CP + "clean" + R + " on " + CC + getcwd() + R)
@@ -122,6 +126,7 @@ def clean(recursive=True):
 def full(*args, command="pdflatex", file="main", verbose=False, out=".", skip=False) -> bool:
     """
     Attempt a full compilation process and compile glossary entries such as bibliography if found
+
     :param skip: always return true
     :param args: additional arguments passed to the tex command
     :param command: tex command used to compile the source files
@@ -150,6 +155,7 @@ def full(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fa
 def parse(args):
     """
     Parse arguments from the args list and act according to their values
+
     :param args: list of arguments to parse
     """
     # additional arguments for a targets command
