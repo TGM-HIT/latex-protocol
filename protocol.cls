@@ -1,68 +1,63 @@
+% ====================
+% :: LaTeX Protocol ::
+% ====================
+%
+% LaTeX class for protocols designed for the HIT department at TGM Vienna.
+% Thanks to @chro and @mborko for the previous templates and support!
+%
+% @author   Markus Reichl <markus@re1.at> 
+% @version  2018-04-16
+% @url      https://github.com/tgm-hit/latex-protocol
+
+
 \ProvidesClass{protocol}
-
-% # Options
-% ## Use landscape orientation
-\newif\iflandscape\landscapefalse
+% -------------
+% :: Options ::
+% -------------
+\newif\iflandscape\landscapefalse	% Landscape orientation
 \DeclareOption{landscape}{\landscapetrue\PassOptionsToClass{landscape}{article}}
-
-% ## Do not print title page
-\newif\iftitle\titletrue
+\newif\iftitle\titletrue			% No title page
 \DeclareOption{notitle}{\titlefalse}
-
-% ## Do not print table of contents
-\newif\iftoc\toctrue
+\newif\iftoc\toctrue				% No table of contents
 \DeclareOption{notoc}{\tocfalse}
-
-% ## Do not print table of contents
-\newif\iftable\tabletrue
+\newif\iftable\tabletrue			% No information table on page bottom
 \DeclareOption{notable}{\tablefalse}
-
-% ## Do not print logos
-\newif\iflogos\logostrue
+\newif\iflogos\logostrue			% No logos
 \DeclareOption{nologos}{\logosfalse}
-
-% ## Use default latex fonts
-\newif\iffonts\fontstrue
+\newif\iffonts\fontstrue			% No additional fonts
 \DeclareOption{nofonts}{\fontsfalse}
-
-% ## Do not except glossaries
-\newif\ifglo\glotrue
+\newif\ifglo\glotrue				% Do not except glossaries
 \DeclareOption{noglo}{\glofalse}
-
-% ## Do not except bibliography
-\newif\ifbib\bibtrue
+\newif\ifbib\bibtrue				% Do not except bibliography
 \DeclareOption{nobib}{\bibfalse}
-
-% ## Skip line instead of indent after blank line
-\newif\ifparskip\parskipfalse
+\newif\ifparskip\parskipfalse		% Lineskip instead of indent after blank line
 \DeclareOption{parskip}{\parskiptrue}
-
-% ## Use minted package
-\newif\ifminted\mintedfalse
+\newif\ifminted\mintedfalse			% Minted for code listings
 \DeclareOption{minted}{\mintedtrue}
-
-% ## Use natbib package
-\newif\ifnatbib\natbibfalse
+\newif\ifnatbib\natbibfalse			% NatBib as bibliography backend
 \DeclareOption{natbib}{\bibtrue\natbibtrue}
-
-% # Pass options
-% \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptions \relax
-% ## Load article class
+\newif\ifsans\sansfalse          	% Sans-serif fonts
+\DeclareOption{sans}{\sanstrue}
+% Pass options
+\ProcessOptions\relax
+% Load article class
 \IfFileExists{crimson.sty}{
     \LoadClass[a4paper,11pt]{article}   % Crimson
 }{  \LoadClass[a4paper,10pt]{article}}  % Default
 
-% # Packages
-% ## Require landscape geometry
-\iflandscape\RequirePackage[landscape,margin=1in]{geometry}
-\else\RequirePackage{a4wide}\fi
 
-% ## Fonts
-\iffonts
-    \IfFileExists{crimson.sty}{\RequirePackage{crimson}}{}
-    \IfFileExists{crimson.sty}{\RequirePackage{inconsolata}}{}
+% --------------
+% :: Packages ::
+% --------------
+\iffonts	% Load correct fonts when available
+	\ifsans	\renewcommand*\familydefault{\sfdefault}
+	\else	\IfFileExists{crimson.sty}{\RequirePackage{crimson}}{}\fi
+    \IfFileExists{inconsolate.sty}{\RequirePackage{inconsolata}}{}
 \fi
+
+% Require landscape geometry
+\iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
+\else			\RequirePackage{a4wide}\fi
 
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}

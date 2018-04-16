@@ -11,6 +11,7 @@ Helps building LaTeX documents on multiple platforms.
 """
 
 import argparse
+import re
 import sys
 
 from glob import glob
@@ -77,11 +78,19 @@ def tex(*args, command="pdflatex", file="main", interaction="batchmode", out="."
            "-interaction=%s" % interaction,
            "-output-directory=%s" % out,
            *args, file]
-
+    # call the command and look out for errors
     if call(tuple(cmd)) < 1:    # command exits without error code
         print(CG + "Everything okay with " + CP + command + R)
     else:                       # command exits with error code
         print(CR + command + " finished with errors" + R)
+
+    if isfile(file + ".log"):   # list warnings and errors found in log file
+        with open(file + ".log", "r", errors="replace") as file:
+            for line in file:
+                if re.search(".*:[0-9]*:.*", line):     # find errors
+                    print(CR + "Error: " + line)
+                if re.search("[0-9]+--[0-9]+", line):   # find warnings
+                    print(CO + "Warning: " + R + line)
 
 
 def clean(recursive=True):
