@@ -9,6 +9,7 @@ Helps building LaTeX documents on multiple platforms.
 
 @author     Markus Re1 <markus@re1.at>
 @version    2018-04-17
+@url        https://github.com/tgm-hit/latex-protocol
 """
 
 import argparse
