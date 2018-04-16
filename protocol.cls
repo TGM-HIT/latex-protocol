@@ -56,7 +56,7 @@
 \iffonts	% Load correct fonts when available
 	\ifsans	\renewcommand*\familydefault{\sfdefault}
 	\else	\IfFileExists{crimson.sty}{\RequirePackage{crimson}}{}\fi
-    \IfFileExists{inconsolate.sty}{\RequirePackage{inconsolata}}{}
+    \IfFileExists{inconsolata.sty}{\RequirePackage{inconsolata}}{}
 \fi
 % Require landscape geometry and use smaller margins
 \iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
@@ -115,10 +115,11 @@
 
 % :: Colours :: %
 \definecolor{MyLightGray}{RGB}{252,252,252}
-\definecolor{MyBlue}{RGB}{5,102,141}
+\definecolor{MyBlue}{HTML}{247ba0}
 \definecolor{MyGreen}{RGB}{0,168,150}
 \definecolor{MyBrown}{RGB}{143,89,3}
 \definecolor{MyOrange}{RGB}{213,111,30}
+\definecolor{MyRed}{HTML}{f25f5c}
 
 % ------------------- %
 % :: Configuration :: %
@@ -159,7 +160,7 @@
 \fancyhead[L]{\small \thetitle}
 \fancyhead[C]{\small \@mysubject}
 \fancyhead[R]{\small \@date}
-\fancyfoot[L]{\small \theauthor ~ {\footnotesize\ccby}}
+\fancyfoot[L]{\small \theauthor~{\footnotesize\ccby}}
 \fancyfoot[C]{\small \@mycourse}
 \fancyfoot[R]{\small \thepage~/~{\lastpageref*{VeryLastPage}}}
 \makeatother
