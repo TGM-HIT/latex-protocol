@@ -179,17 +179,13 @@ def parse(args):
     if "clean" in args.target:      # clean up files and directories listed in the TMP constant
         clean()
     elif "draft" in args.target:    # run the tex command once
-        for file in files:          # iterate over source files
-            tex(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip)
+        any(tex(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files)
     elif "glo" in args.target:      # compile glossary entries
-        for file in files:          # iterate over source files
-            glossaries(file=file, out=out, skip=skip)
+        any(glossaries(file=file, out=out, skip=skip) for file in files)
     elif "bib" in args.target:      # compile bibliography entries using bibtex
-        for file in files:          # iterate over source files
-            bibtex(file=file, skip=skip)
+        any(bibtex(file=file, skip=skip) for file in files)
     else:                           # attempt a full compilation by default
-        for file in files:          # iterate over source files
-            full(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip)
+        any(full(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files)
 
 
 if __name__ == "__main__":
