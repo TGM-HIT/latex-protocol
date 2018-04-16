@@ -34,7 +34,7 @@ CC = "\033[96m"     # cyan
 TMP = [["**/*.acn", "**/*.acr", "**/*.alg", "**/*.aux", "**/*.bbl", "**/*.blg", "**/*-blx.bib",
         "**/*.bcf", "**/*.dvi", "**/*.glg", "**/*.glo", "**/*.gls", "**/*.glsdefs", "**/*.ist",
         "**/*.out", "**/*.run.xml", "**/*.synctex.gz", "**/*.toc", "**/*.xdy", "**/*.lot",
-        "**/*.lof", "**/*.lol"], ["**/*_minted-*"]]
+        "**/*.lof", "**/*.lol"], []]
 
 
 def bibtex(file="main", skip=False) -> bool:
@@ -176,6 +176,8 @@ def parse(args):
     # add log files to temporary file list if no argument is given
     if not args.log:
         TMP[0].append("**/*.log")
+    if not args.minted:
+        TMP[1].append("**/*_minted-*")
     # decide on a target
     if "clean" in args.target:      # clean up files and directories listed in the TMP constant
         clean()
@@ -200,6 +202,7 @@ if __name__ == "__main__":
                              " To specify the target manually append bib, clean, draft or glo.")
     PARSER.add_argument("files", nargs="*", default="main", help="source tex files to compile")
     PARSER.add_argument("-l", "--log", action="store_true", help="spare log files during cleanup")
+    PARSER.add_argument("-m", "--minted", action="store_true", help="spare minted files during cleanup")
     PARSER.add_argument("-q", "--quiet", action="store_true", help="only show fatal errors")
     PARSER.add_argument("-s", "--skip", action="store_true", help="skip errors in tex commands")
     PARSER.add_argument("-v", "--verbose", action="store_true", help="do not filter logs")

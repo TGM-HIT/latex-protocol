@@ -183,18 +183,17 @@
 % :: Title :: %
 \makeatletter
 \renewcommand\@maketitle{
-    \iflogos~\\              % Print logos
-        \IfFileExists{images/tgm-logo.png}
-            {\includegraphics[height=2cm]{images/tgm-logo.png}}{}\hfill
-        \IfFileExists{images/hit-logo.png}
-            {\includegraphics[height=2cm]{images/hit-logo.png}}{}\fi
-
-    \vskip 1cm              % Minimum margin
-    \iflandscape\else       % Do not increase margin on landscape
-        \iftable\vskip 3cm  % + table margin
-        \else\vskip 1cm\fi  % + default margin
-    \fi
-    % Content
+    \iflogos~\\	% Line fix
+    	\begin{minipage}{3.2cm}
+	        \IfFileExists{images/logo-left.png}{
+	            \includegraphics[width=3.2cm]{images/logo-left.png}}{}
+    	\end{minipage}
+    	\hfill
+        \begin{minipage}{3.2cm}
+	    	\IfFileExists{images/logo-right.png}{
+	            \includegraphics[width=3.2cm]{images/logo-right.png}}{}
+	    \end{minipage}
+    	\vfill\fi 	% Fill space between title header and project logo and headings
     \begin{center}
         \if\relax\@mysubject\relax\else     {\Large\@mysubject}     ~\\\vspace{0.5em}\fi
         \if\relax\@mycourse\relax\else      \@mycourse              ~\\\vspace{2em}\fi
@@ -203,13 +202,13 @@
         \theauthor                                                  ~\\\vspace{0.5em}
         \@date
     \end{center}
-    \vskip 1cm  % Minimum margin
+    \vfill	% Fill space between headings and the rest of the page
 }\makeatother
 
-% ## Table after titlepage
+% :: Information table after title :: %
 \makeatletter
 \newcommand\maketable{
-    \vfill~\\
+	~\\
     \begin{minipage}[t]{0.3\textwidth}
         Bewertung:\hfill\vspace{0.5em}\\
         Betreuer:\hfill\@myteacher
@@ -223,7 +222,7 @@
     \newpage
 }\makeatother
 
-% ## Basic centered figure
+% :: Basic centered figure :: %
 % \makefig{path}{width}{caption}{label}
 \newcommand\makefig[4]{
     \begin{figure}[H]
@@ -236,7 +235,7 @@
     \end{figure}
 }
 
-% ## Math variable declaration
+% :: Math variable declaration :: %
 \newenvironment{vardef}{
 	\center \small
 	\begin{tabular}{l l l}
@@ -246,7 +245,7 @@
 }
 
 
-% ## Code environments
+% :: Code environments :: %
 % Extra % is used as a linefix for the code interpreter
 \ifminted   % Minted goes here
     \newcommand\setcode[1]{\setminted{#1}}  % Code settings
@@ -278,10 +277,10 @@
 % Add common commands at the beginning of the document
 \AtBeginDocument{
     \pagenumbering{arabic}                      % Required by pageslts
-    \iftitle 	\newgeometry{left=1in, right=1in, top=.75in, bottom=.75in}
+    \iftitle 	\newgeometry{left=1.25in, right=1.25in, top=.75in, bottom=1.75in}
     			\maketitle\thispagestyle{empty} % Print title on a clean page
+    			\iftable\maketable\fi           % Version table
     			\restoregeometry\fi 			% Restore geometry
-    \iftable\maketable\fi                       % Version table
     \iftoc\tableofcontents\glsresetall\fi       % Table of contents
 }
 
