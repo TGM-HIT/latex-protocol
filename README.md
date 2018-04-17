@@ -9,8 +9,9 @@ cd protocol
 
 **Contents**
 - [Usage](#usage)
-	- [Latex](#latex)
+	- [LaTeX](#latex)
 	- [TexStudio](#texstudio)
+	- [ShareLatex](#sharelatex)
 - [Options](#options)
 - [Variables](#variables)
 
@@ -24,7 +25,7 @@ If (for some reason) you do not want to depend on the `make` script you can also
 pdflatex -shell-escape main	# Initial compilation
 makeglossaries main 		# Compile glossaries
 pdflatex -shell-escape main	# Progressive compilation for glossaries
-bibtex main 				# Compile bibliography
+bibtex main 			# Compile bibliography
 pdflatex -shell-escape main	# Progressive compilation for bibtex
 pdflatex -shell-escape main	# Progressive compilation for bibtex
 ```
@@ -35,9 +36,9 @@ In TexStudio a custom command can be added under `Options` &rarr; `Configure Tex
 pdflatex -shell-escape -interaction=nonstopmode % | txs:///makeglossaries | pdflatex -shell-escape -interaction=nonstopmode % | txs:///bibtex | pdflatex -shell-escape -interaction=nonstopmode % | pdflatex -shell-escape -interaction=nonstopmode % | txs:///view-pdf-internal --embedded
 ```
 
-Of course you can also add the `make` script as a user command but you might want to set the variable `-l` so TexStudio can find your logfile after cleanup.
+Of course you can also add the `make` script as a user command but you might want to set `-lm` so TexStudio can find your log files and minted cache after cleanup.
 ```sh
-python make -l | txs:///view-pdf-internal --embedded
+python make -lm | txs:///view-pdf-internal --embedded
 ```
 
 ### ShareLaTex
@@ -48,17 +49,19 @@ python make -l | txs:///view-pdf-internal --embedded
 ## Options
 Option | Result
 ------ | ------
+`en` | Set main document language to english
 `landscape` | Change the page format to landscape orientation
 `minted` | Add and configure minted package
 `natbib` | Change bibtex backend to natbib
-`nobib` | Disable bibliography
-`nofonts` | Change font to default
-`noglo` | Disable acronyms and glossary
-`nologos` | Disable logos on titlepage
-`notitle` | Disable titlepage
-`notoc` | Disable table of contents
-`notable` | Disable table on titlepage
-`parskip` | Skip line instead of indent after blank line
+`nobib` | No bibliography
+`nofonts` | No additional fonts
+`noglo` | No acronyms and glossary
+`nologos` | No logos on titlepage
+`notable` | No table on titlepage
+`notitle` | No titlepage
+`notoc` | No table of contents
+`parskip` | Skip a line instead of indenting after blank line
+`sans` | Load sans-serif fonts
 
 ## Variables
 Variables can be set as commands like
