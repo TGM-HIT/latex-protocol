@@ -114,12 +114,13 @@
 \newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
 
 % :: Colours :: %
-\definecolor{MyLightGray}{RGB}{250,250,250}
-\definecolor{MyBlue}{HTML}{247ba0}
-\definecolor{MyGreen}{RGB}{0,168,150}
-\definecolor{MyBrown}{RGB}{143,89,3}
-\definecolor{MyOrange}{RGB}{213,111,30}
+% Colour scheme: https://coolors.co/7c564f-f25f5c-facc6b-93d6a4-247ba0
+\definecolor{MyLightGray}{HTML}{fafafa}
+\definecolor{MyBrown}{HTML}{a25e56}
 \definecolor{MyRed}{HTML}{f25f5c}
+\definecolor{MyOrange}{HTML}{facc6b}
+\definecolor{MyGreen}{HTML}{93d6a4}
+\definecolor{MyBlue}{HTML}{247ba0}
 
 % ------------------- %
 % :: Configuration :: %
@@ -255,22 +256,16 @@
         \begin{minted}[#1]{#2}%
     }{  \end{minted}}
 
-    \newcommand\codein{\mintinline}         % Inline code (alias)
-    \newcommand\codeinline{\codein}         % Inline code (alias for @kevsoft)
-    \newcommand\inputcode{\inputminted}		% Input code (alias)
-    % Single line of code
-    \newcommand\codeline[3][]{\mint[linenos=false,#1]{#2}\relax#3\relax}
+    \newcommand\codeinline{\mintinline}     % Inline code
+    \newcommand\codein{\codeinline}     	% Shorter command
+    \newcommand\inputcode{\inputminted}		% Input code
 \else       % Listings goes here
     \newcommand\setcode[1]{\lstset{#1}}                         % Code settings
     \lstnewenvironment{code}[2][]{\lstset{language={#2},#1}}{}  % Code environment
 
-    \newcommand\codein[3][]{\lstinline[language=#2,#1]\relax#3\relax}   % Inline code
-    \newcommand\codeinline{\codein}                                     % Alias for @kevsoft
+    \newcommand\codeinline[3][]{\lstinline[language=#2,#1]\relax#3\relax}   % Inline code
+    \newcommand\codein{\codeinline}                                     	% Shorter command
     \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{\detokenize{#3}}}   % Input code
-
-    \newcommand\codeline[3][]{\begin{flushleft}
-        \lstinline[language=#2,#1]\relax#3\relax	% Single line of code
-    \end{flushleft}}
 \fi
 
 % :: Begin Document :: %

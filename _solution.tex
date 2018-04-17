@@ -17,8 +17,10 @@
 
 \subsection{Variablen}
 Variablen werden über Kommandos gesetzt, die als Parameter den gewünschten Wert erhalten.
-\ifminted   \codeline{tex}{\myvariable{value}}
-\else       \codeline{tex}{\\myvariable{value}}\fi  % Escape \ for lstlistings
+\begin{center}
+    \ifminted   \codein{tex}{\myvariable{value}}
+    \else       \codein{tex}{\\myvariable\{value\}}\fi
+\end{center}
 
 \begin{tabular}{l l}
 \textbf{Kommando} & \textbf{Inhalt}\\
@@ -134,8 +136,12 @@ Zur Verwaltung des Glossars wird standardmäßig die Datei \texttt{glossaries.te
 \\\\
 Als Beispiel wurde ein Akronym für \gls{ac-syt} und eine Definition zu \gls{ac-syt} selbst hinzugefügt.
 
+\begin{listing}
 \inputcode{tex}{glossaries.tex}
-
+\caption{Glossareintrag}
+\label{lst:glossaries}
+\end{listing}
+~\\
 Im Dokument selbst kann ein Akronym mittels \verb|\gls{ac-syt}| verwendet werden. Beachte, dass ein Akronym welches bereits im Dokument verwendet wurde, bei der ersten Verwendung ausgeschrieben und danach immer gekürzt wird.
 \\\\
 Mit \verb|\gls{syt}| kann zum Beispiel eine Referenz zur Definition von \gls{syt} hinzugefügt werden.
@@ -146,40 +152,35 @@ Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 \newpage
 \subsection{Quelltext}
 \begin{listing}
-\ifminted   \codeline[linenos=true]{tex}{\begin{code}[]{java}}  % Escape \ for lstlistings
-\else       \codeline[numbers=left]{tex}{\\begin\{code\}[]\{java\}}\fi
+\ifminted   \mint{tex}|\begin{code}[]{java}|    % Escape \ for lstlistings
+\else       \lstinline[numbers=left, language=tex]$\begin{code}[]{java}$\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{code}}  % Escape \ for lstlistings
-\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{code\}}\fi
+\ifminted   \mint[firstnumber=last]{tex}|\end{code}|    % Escape \ for lstlistings
+\else       \lstinline[firstnumber=last, numbers=left, language=tex]$\end{code}$\fi
 
 \caption{Java Code}
 \label{lst:java-code}
 \end{listing}
 ~\\
 Die Darstellung von Quelltext im Text ist über das Kommando \verb|\codein[options]{lang}{code}| möglich.
-\\\\
-Eine einzelne Zeile kann mittels
-\ifminted   \codeline{tex}{\codeline[options]{lang}{code}}  % Escape \ for lstlistings
-\else       \codeline{tex}{\\codeline[options]\{lang\}\{code\}}\fi
-eingefügt werden.
 
 \subsubsection{Listings}
 \begin{listing}
-\ifminted   \codeline[linenos=true]{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
-\else       \codeline[numbers=left]{tex}{\\begin\{lstlisting\}[language=Java, caption=Java Lstlisting]}\fi
+\ifminted   \mint{tex}|\begin{lstlisting}[language=Java, caption=Java Lstlisting]|
+\else       \lstinline[numbers=left, language=tex]$\begin{lstlisting}[language=Java, caption=Java Lstlisting]$\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{lstlisting}}
-\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{lstlisting\}}\fi
+\ifminted   \mint[firstnumber=last]{tex}|\end{lstlisting}|
+\else       \lstinline[firstnumber=last, numbers=left, language=tex]$\end{lstlisting}$\fi
 \caption{Java Lstlisting}
 \label{lst:java-lstlisting}
 \end{listing}
@@ -189,24 +190,24 @@ public static void main(String[] args) {
 Benötigt die Option \texttt{minted}.
 \paragraph{Umgebung}~\\
 \begin{listing}
-\ifminted   \codeline[linenos=true]{tex}{\begin{minted}[options]{java}}
-\else       \codeline[numbers=left]{tex}{\\begin\{minted\}[]\{java\}}\fi
+\ifminted   \mint{tex}|\begin{minted}[options]{java}|
+\else       \lstinline[numbers=left, language=tex]$\begin{minted}[]{java}$\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{minted}}
-\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{minted\}}\fi
+\ifminted   \mint[firstnumber=last]{tex}|\end{minted}|
+\else       \lstinline[firstnumber=last, numbers=left, language=tex]$\end{minted}$\fi
 \caption{Minted Umgebung}
 \label{lst:minted-env}
 \end{listing}
 
 \paragraph{Zeile}~\\
 \begin{listing}
-\ifminted   \codeline{tex}{\mint[options]{lang}|code|}
-\else       \codeline{tex}{\\mint[options]{lang}|code|}\fi
+\ifminted   \mint{tex}$\mint[options]{lang}|code|$
+\else       \lstinline[language=tex]$\mint[options]{lang}|code|$\fi
 \caption{Minted Einzeiler}
 \label{lst:minted-line}
 \end{listing}
