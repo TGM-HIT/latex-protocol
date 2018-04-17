@@ -114,7 +114,7 @@
 \newcommand\myfinish[1]{\renewcommand\@myfinish{#1}}
 
 % :: Colours :: %
-\definecolor{MyLightGray}{RGB}{252,252,252}
+\definecolor{MyLightGray}{RGB}{250,250,250}
 \definecolor{MyBlue}{HTML}{247ba0}
 \definecolor{MyGreen}{RGB}{0,168,150}
 \definecolor{MyBrown}{RGB}{143,89,3}
@@ -128,7 +128,7 @@
 % :: Listings :: %
 \ifminted							% Configure minted
     \floatplacement{listing}{H} 	% Override default listing float
-    \usemintedstyle{rainbow_dash}	% autumn, rainbow_dash, tango, trac
+    \usemintedstyle{tango}			% autumn, rainbow_dash, tango, trac
     \setminted{ fontsize=\small,
                 linenos=true,
                 breakanywhere=true,
@@ -256,11 +256,10 @@
     }{  \end{minted}}
 
     \newcommand\codein{\mintinline}         % Inline code (alias)
-    \newcommand\codeinline{\codein}         % Alias for @kevsoft
-
-    \newcommand\inputcode{\inputminted}     % Input code (alias)
-
-    \newcommand\codeline[3][]{\mint[#1]{#2}\relax#3\relax}  % Single line of code
+    \newcommand\codeinline{\codein}         % Inline code (alias for @kevsoft)
+    \newcommand\inputcode{\inputminted}		% Input code (alias)
+    % Single line of code
+    \newcommand\codeline[3][]{\mint[linenos=false,#1]{#2}\relax#3\relax}
 \else       % Listings goes here
     \newcommand\setcode[1]{\lstset{#1}}                         % Code settings
     \lstnewenvironment{code}[2][]{\lstset{language={#2},#1}}{}  % Code environment
@@ -270,7 +269,7 @@
     \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{\detokenize{#3}}}   % Input code
 
     \newcommand\codeline[3][]{\begin{flushleft}
-        \lstinline[language=#2,#1]\relax#3\relax            % Single line of code
+        \lstinline[language=#2,#1]\relax#3\relax	% Single line of code
     \end{flushleft}}
 \fi
 

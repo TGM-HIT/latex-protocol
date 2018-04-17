@@ -220,7 +220,7 @@ if __name__ == "__main__":
         description="This python script helps compiling latex documents "
                     "by providing most functions you would except from a build tool.")
     # add arguments for different use-cases
-    PARSER.add_argument("target", nargs="?", default="all",
+    PARSER.add_argument("target", nargs="?", default="full",
                         help="the script will attempt a full compilation process by default ."
                              " To specify the target manually append bib, clean, draft or glo.")
     PARSER.add_argument("files", nargs="*", default="main", help="source tex files to compile")

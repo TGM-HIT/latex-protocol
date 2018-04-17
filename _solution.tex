@@ -17,9 +17,8 @@
 
 \subsection{Variablen}
 Variablen werden über Kommandos gesetzt, die als Parameter den gewünschten Wert erhalten.
-\begin{code}{tex}
-\myvariable{value}
-\end{code}
+\ifminted   \codeline{tex}{\myvariable{value}}
+\else       \codeline{tex}{\\myvariable{value}}\fi  % Escape \ for lstlistings
 
 \begin{tabular}{l l}
 \textbf{Kommando} & \textbf{Inhalt}\\
@@ -147,16 +146,16 @@ Zitate sollten gesammelt in der Datei \texttt{bib.bib} verwaltet werden.
 \newpage
 \subsection{Quelltext}
 \begin{listing}
-\ifminted   \codeline{tex}{\begin{code}[]{java}}
-\else       \codeline{tex}{\\begin\{code\}[]\{java\}}\fi
+\ifminted   \codeline[linenos=true]{tex}{\begin{code}[]{java}}  % Escape \ for lstlistings
+\else       \codeline[numbers=left]{tex}{\\begin\{code\}[]\{java\}}\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last]{tex}{\end{code}}
-\else       \codeline[firstnumber=last]{tex}{\\end\{code\}}\fi
+\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{code}}  % Escape \ for lstlistings
+\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{code\}}\fi
 
 \caption{Java Code}
 \label{lst:java-code}
@@ -165,22 +164,22 @@ public static void main(String[] args) {
 Die Darstellung von Quelltext im Text ist über das Kommando \verb|\codein[options]{lang}{code}| möglich.
 \\\\
 Eine einzelne Zeile kann mittels
-\ifminted   \codeline{tex}{\codeline[options]{lang}{code}}
+\ifminted   \codeline{tex}{\codeline[options]{lang}{code}}  % Escape \ for lstlistings
 \else       \codeline{tex}{\\codeline[options]\{lang\}\{code\}}\fi
 eingefügt werden.
 
 \subsubsection{Listings}
 \begin{listing}
-\ifminted   \codeline{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
-\else       \codeline{tex}{\\begin\{lstlisting\}[language=Java, caption=Java Lstlisting]}\fi
+\ifminted   \codeline[linenos=true]{tex}{\begin{lstlisting}[language=Java, caption=Java Lstlisting]}
+\else       \codeline[numbers=left]{tex}{\\begin\{lstlisting\}[language=Java, caption=Java Lstlisting]}\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last]{tex}{\end{lstlisting}}
-\else       \codeline[firstnumber=last]{tex}{\\end\{lstlisting\}}\fi
+\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{lstlisting}}
+\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{lstlisting\}}\fi
 \caption{Java Lstlisting}
 \label{lst:java-lstlisting}
 \end{listing}
@@ -190,25 +189,24 @@ public static void main(String[] args) {
 Benötigt die Option \texttt{minted}.
 \paragraph{Umgebung}~\\
 \begin{listing}
-\ifminted   \codeline{tex}{\begin{minted}[options]{java}}
-\else       \codeline{tex}{\\begin\{minted\}[]\{java\}}\fi
+\ifminted   \codeline[linenos=true]{tex}{\begin{minted}[options]{java}}
+\else       \codeline[numbers=left]{tex}{\\begin\{minted\}[]\{java\}}\fi
 \begin{code}[firstnumber=last]{java}
 // Ich bin ein Kommantar!
 public static void main(String[] args) {
     System.out.println("Ich bin ein Array!")
 }
 \end{code}
-\ifminted   \codeline[firstnumber=last]{tex}{\end{minted}}
-\else       \codeline[firstnumber=last]{tex}{\\end\{minted\}}\fi
+\ifminted   \codeline[firstnumber=last, linenos=true]{tex}{\end{minted}}
+\else       \codeline[firstnumber=last, numbers=left]{tex}{\\end\{minted\}}\fi
 \caption{Minted Umgebung}
 \label{lst:minted-env}
 \end{listing}
 
 \paragraph{Zeile}~\\
 \begin{listing}
-\begin{code}{tex}
-\mint[options]{lang}|code|
-\end{code}
+\ifminted   \codeline{tex}{\mint[options]{lang}|code|}
+\else       \codeline{tex}{\\mint[options]{lang}|code|}\fi
 \caption{Minted Einzeiler}
 \label{lst:minted-line}
 \end{listing}
