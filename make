@@ -47,12 +47,12 @@ def bibtex(file="main", skip=False) -> bool:
     """
     print(CB + "Run " + CP + "bibtex" + R + " on " + CC + file + ".tex" + R)
 
-    cmd = ("bibtex", file)          # compile command string before call
-    success = call(tuple(cmd)) < 1  # call the command and watch for errors
+    cmd = ("bibtex", file)      # compile command string before call
+    res = call(tuple(cmd)) < 1  # call the command and watch for errors
 
-    print(CG + "Success on " + CP + "bibtex" + R if success else CR + "Error on bibtex" + R)
-    print()                         # empty line for better readability
-    return skip or success          # return success or skip errors
+    print(CG + "Success on " + CP + "bibtex" + R if res else CR + "Error on bibtex" + R)
+    print()                     # empty line for better readability
+    return skip or res          # return success or skip errors
 
 
 def glossaries(file="main", out=".", skip=False) -> bool:
@@ -67,11 +67,11 @@ def glossaries(file="main", out=".", skip=False) -> bool:
     print(CB + "Run " + CP + "makeglossaries" + R + " on " + CC + file + ".glo" + R)
     # compile command string before call
     cmd = ("makeglossaries", "-d", out, file)
-    success = call(tuple(cmd)) < 1  # call the command and watch for errors
+    res = call(tuple(cmd)) < 1  # call the command and watch for errors
 
-    print(CG + "Success on " + CP + "glossaries" + R if success else CR + "Error on glossaries" + R)
-    print()                         # empty line for better readability
-    return skip or success          # return success or skip errors
+    print(CG + "Success on " + CP + "glossaries" + R if res else CR + "Error on glossaries" + R)
+    print()                     # empty line for better readability
+    return skip or res          # return success or skip errors
 
 
 def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=False) -> bool:
@@ -86,7 +86,7 @@ def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fal
     :param out: path to generate compiled files into
     :return: True on success or False on error
     """
-    print(CB + "Run " + CP + command + R + "on " + CC + file + ".tex" + R)
+    print(CB + "Run " + CP + command + R + " on " + CC + file + ".tex" + R)
 
     mode = "nonstopmode" if verbose else "batchmode"
     cmd = [command,                     # build the final command before calling it
@@ -95,7 +95,7 @@ def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fal
            "-interaction=" + mode,      # interaction mode
            "-output-directory=" + out,  # output directory
            *args, file]                 # additional args and filename
-    success = call(tuple(cmd)) < 1      # call the command and watch for errors
+    res = call(tuple(cmd)) < 1          # call the command and watch for errors
 
     if isfile(file + ".log"):           # list warnings and errors found in log file
         with open(file + ".log", "r", errors="replace") as log:
@@ -105,12 +105,12 @@ def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fal
                 if re.search("[0-9]+--[0-9]+", line):   # find warnings
                     print(CO + "Warning: " + R + line.replace("\n", ""))
 
-    print(CG + "Success on " + CP + command + R if success else CR + "Error on " + command + R)
+    print(CG + "Success on " + CP + command + R if res else CR + "Error on " + command + R)
     print()                 # empty line for better readability
-    return skip or success  # return success or skip errors
+    return skip or res      # return success or skip errors
 
 
-def clean(recursive=True):
+def clean(recursive=True) -> bool:
     """
     Clean up directory by removing any file listed in the TMP[0] constant
     and any directory listed in the TMP[1] constant
@@ -119,9 +119,11 @@ def clean(recursive=True):
     """
     print(CB + "Run " + CP + "clean" + R + " on " + CC + getcwd() + R)
     # delete temporary files
-    any([remove(f) for f in glob(name, recursive=recursive)] for name in TMP[0])
+    res = [[remove(f) for f in glob(name, recursive=recursive)] for name in TMP[0]]
     # delete temporary directories
-    any([rmtree(f) for f in glob(name, recursive=recursive)] for name in TMP[1])
+    res += [[rmtree(f) for f in glob(name, recursive=recursive)] for name in TMP[1]]
+    # return success or rare case of error
+    return all(res)
 
 
 def full(*args, command="pdflatex", file="main", verbose=False, out=".", skip=False) -> bool:
@@ -165,30 +167,33 @@ def parse(args):
     command = "pdflatex"
     # names of the tex source files to compile without their extension
     files = args.files.replace(".tex", "").split(" ")
-    skip = args.skip                # remember to ignore errors
-    verbose = args.verbose          # interaction mode for tex commands
     out = args.out or "."           # directory to copy generated files into
+    skip = args.skip                # remember to ignore errors
+    target = args.target or "full"  # choose target full by default
+    verbose = args.verbose          # interaction mode for tex commands
     # change tex command according to the arguments given by the user
     if args.latex:
         command = "latex"
     if args.xelatex:
         command = "xelatex"
-    # add log files to temporary file list if no argument is given
-    if not args.log:
+    # spare temp files
+    if not args.log:        # add log files and to temp file list
         TMP[0].append("**/*.log")
-    if not args.minted:
+    if not args.minted:     # add minted dir to temp dir list
         TMP[1].append("**/*_minted-*")
-    # decide on a target
-    if "clean" in args.target:      # clean up files and directories listed in the TMP constant
-        clean()
-    elif "draft" in args.target:    # run the tex command once
-        any(tex(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files)
-    elif "glo" in args.target:      # compile glossary entries
-        any(glossaries(file=file, out=out, skip=skip) for file in files)
-    elif "bib" in args.target:      # compile bibliography entries using bibtex
-        any(bibtex(file=file, skip=skip) for file in files)
-    else:                           # attempt a full compilation by default
-        any(full(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files)
+    # choose a target or fall back to full compilation
+    if "clean" in target:       # clean up files and directories listed in the TMP constant
+        res = clean()
+    elif "draft" in target:     # run the tex command once
+        res = [tex(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files]
+    elif "glo" in target:       # compile glossary entries
+        res = [glossaries(file=file, out=out, skip=skip) for file in files]
+    elif "bib" in target:       # compile bibliography entries using bibtex
+        res = [bibtex(file=file, skip=skip) for file in files]
+    else:                       # attempt a full compilation by default
+        res = [full(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files]
+    # log success
+    print(CG + "Success on " + CP + target + R if all(res) else CR + "Error on " + target + R)
 
 
 if __name__ == "__main__":
@@ -201,8 +206,8 @@ if __name__ == "__main__":
                         help="the script will attempt a full compilation process by default ."
                              " To specify the target manually append bib, clean, draft or glo.")
     PARSER.add_argument("files", nargs="*", default="main", help="source tex files to compile")
-    PARSER.add_argument("-l", "--log", action="store_true", help="spare log files during cleanup")
-    PARSER.add_argument("-m", "--minted", action="store_true", help="spare minted files during cleanup")
+    PARSER.add_argument("-l", "--log", action="store_true", help="spare log during cleanup")
+    PARSER.add_argument("-m", "--minted", action="store_true", help="spare minted during cleanup")
     PARSER.add_argument("-q", "--quiet", action="store_true", help="only show fatal errors")
     PARSER.add_argument("-s", "--skip", action="store_true", help="skip errors in tex commands")
     PARSER.add_argument("-v", "--verbose", action="store_true", help="do not filter logs")
