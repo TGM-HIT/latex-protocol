@@ -43,8 +43,10 @@ Of course you can also add the `make` script as a user command but you might wan
 python make -l | txs:///view-pdf-internal --embedded
 ```
 
-### ShareLatex
-[ShareLatex](https://www.sharelatex.com/project) is a popular online latex editor and is also fully supported by this template.
+### ShareLaTex
+[ShareLaTex](https://www.sharelatex.com/project) is a popular online latex editor and is also fully supported by this template.
+
+![ShareLaTex usage](https://media.giphy.com/media/DNwRWMqKcwnE92liHn/giphy.gif)
 
 ## Options
 Option | Result
