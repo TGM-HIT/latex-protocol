@@ -199,9 +199,10 @@ def parse(args):
         TMP[0].append("**/*.log")
     if not args.minted:     # add minted dir to temp dir list
         TMP[1].append("**/*_minted-*")
+    res = []					# assume success
     # choose a target or fall back to full compilation
     if "clean" in target:       # clean up files and directories listed in the TMP constant
-        res = clean()
+        clean()
     elif "draft" in target:     # run the tex command once
         res = [tex(*arguments, command=command, file=file, verbose=verbose, out=out, skip=skip) for file in files]
     elif "glo" in target:       # compile glossary entries

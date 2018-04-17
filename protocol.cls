@@ -18,28 +18,28 @@
 \DeclareOption{en}{\entrue}
 \newif\iflandscape\landscapefalse	% Landscape orientation
 \DeclareOption{landscape}{\landscapetrue\PassOptionsToClass{landscape}{article}}
-\newif\ifcolor\colortrue			% No coloured links
-\DeclareOption{nocolor}{\colorfalse}
-\newif\iftitle\titletrue			% No title page
-\DeclareOption{notitle}{\titlefalse}
-\newif\iftoc\toctrue				% No table of contents
-\DeclareOption{notoc}{\tocfalse}
-\newif\iftable\tabletrue			% No information table on page bottom
-\DeclareOption{notable}{\tablefalse}
-\newif\iflogos\logostrue			% No logos
-\DeclareOption{nologos}{\logosfalse}
-\newif\iffonts\fontstrue			% No additional fonts
-\DeclareOption{nofonts}{\fontsfalse}
-\newif\ifglo\glotrue				% Do not except glossaries
-\DeclareOption{noglo}{\glofalse}
-\newif\ifbib\bibtrue				% Do not except bibliography
-\DeclareOption{nobib}{\bibfalse}
-\newif\ifparskip\parskipfalse		% Lineskip instead of indent after blank line
-\DeclareOption{parskip}{\parskiptrue}
 \newif\ifminted\mintedfalse			% Minted for code listings
 \DeclareOption{minted}{\mintedtrue}
 \newif\ifnatbib\natbibfalse			% NatBib as bibliography backend
 \DeclareOption{natbib}{\bibtrue\natbibtrue}
+\newif\ifbib\bibtrue                % Do not except bibliography
+\DeclareOption{nobib}{\bibfalse}
+\newif\ifcolor\colortrue            % No coloured links
+\DeclareOption{nocolor}{\colorfalse}
+\newif\iffonts\fontstrue            % No additional fonts
+\DeclareOption{nofonts}{\fontsfalse}
+\newif\ifglo\glotrue                % Do not except glossaries
+\DeclareOption{noglo}{\glofalse}
+\newif\iflogos\logostrue            % No logos
+\DeclareOption{nologos}{\logosfalse}
+\newif\iftable\tabletrue            % No information table on page bottom
+\DeclareOption{notable}{\tablefalse}
+\newif\iftitle\titletrue            % No title page
+\DeclareOption{notitle}{\titlefalse}
+\newif\iftoc\toctrue                % No table of contents
+\DeclareOption{notoc}{\tocfalse}
+\newif\ifparskip\parskipfalse       % Skip a line instead of indenting after blank line
+\DeclareOption{parskip}{\parskiptrue}
 \newif\ifsans\sansfalse          	% Sans-serif fonts
 \DeclareOption{sans}{\sanstrue}
 % Pass options
