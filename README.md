@@ -25,9 +25,9 @@ which compiles the `main.tex` file using `pdflatex` while looking for bibliograp
 If (for some reason) you do not want to depend on the `make` script you can also use `pdflatex`, `makeglossaries` and `bibtex` from the shell.
 ```sh
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Initial compilation
-makeglossaries protocol 					# Compile glossaries
+makeglossaries protocol 				# Compile glossaries
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for glossaries
-bibtex protocol 						# Compile bibliography
+bibtex protocol 					# Compile bibliography
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 pdflatex -interaction=nonstopmode -shell-escape protocol	# Progressive compilation for bibtex
 ```
