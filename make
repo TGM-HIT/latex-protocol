@@ -159,14 +159,14 @@ def full(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fa
     """
     if not (tex(*args, command=command, file=file, verbose=verbose, out=out) or skip):
         return False            # return error
+    if isfile(file + ".glo"):   # compile glossary entries using and call a progressive tex command
+        if not (glossaries(file=file, out=out) or skip):
+            return False        # return error
+        if not (tex(*args, command=command, file=file, verbose=verbose, out=out) or skip):
+            return False        # return error
     if glob("*.bib"):  # bib files can have different names than the main file
         bibtex(file=file)       # compile bibliography and call progressive tex commands
         if not (tex(*args, command=command, file=file, verbose=verbose, out=out) or skip):
-            return False        # return error
-        if not (tex(*args, command=command, file=file, verbose=verbose, out=out) or skip):
-            return False        # return error
-    if isfile(file + ".glo"):   # compile glossary entries using and call a progressive tex command
-        if not (glossaries(file=file, out=out) or skip):
             return False        # return error
         if not (tex(*args, command=command, file=file, verbose=verbose, out=out) or skip):
             return False        # return error
