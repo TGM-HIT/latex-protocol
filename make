@@ -112,7 +112,8 @@ def tex(*args, command="pdflatex", file="main", verbose=False, out=".", skip=Fal
            "-file-line-error",          # show tag beneath log lines
            "-interaction=" + mode,      # interaction mode
            "-output-directory=" + out,  # output directory
-           *args, file]                 # additional args and filename
+           *args, 						# additional arguments
+           file.replace(".tex", "")] 	# file name without extension
     res = call(tuple(cmd)) < 1          # call the command and watch for errors
 
     if isfile(file + ".log"):           # list warnings and errors found in log file
@@ -184,7 +185,7 @@ def parse(args):
     # tex command to use when compiling tex sources
     command = "pdflatex"
     # names of the tex source files to compile without their extension
-    files = args.files.replace(".tex", "").split(" ")
+    files = args.files if isinstance(args.files, list) else [args.files]
     out = args.out or "."           # directory to copy generated files into
     skip = args.skip                # remember to ignore errors
     target = args.target or "full"  # choose target full by default
@@ -224,7 +225,7 @@ if __name__ == "__main__":
     PARSER.add_argument("target", nargs="?", default="full",
                         help="the script will attempt a full compilation process by default ."
                              " To specify the target manually append bib, clean, draft or glo.")
-    PARSER.add_argument("files", nargs="*", default="main", help="source tex files to compile")
+    PARSER.add_argument("-f", "--files", nargs="*", default="main", help="source tex files to compile")
     PARSER.add_argument("-l", "--log", action="store_true", help="spare log during cleanup")
     PARSER.add_argument("-m", "--minted", action="store_true", help="spare minted during cleanup")
     PARSER.add_argument("-q", "--quiet", action="store_true", help="only show fatal errors")
