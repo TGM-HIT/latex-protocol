@@ -40,16 +40,16 @@ Variablen werden über Kommandos gesetzt, die als Parameter den gewünschten Wer
 
 \begin{listing}
 \begin{code}{tex}
-\makefig{images/logo-right.png}{height=2cm}{
+\makefig{images/logo-right.png}[height=2cm][
     Mit Beschreibung und Label  % (Optional)
-}{
+][
     fig:caption-label           % (Optional)
-}
+]
 \end{code}
 \caption{\texttt makefig}
 \label{lst:makefig}
 \end{listing}
-\makefig{images/logo-right.png}{height=2cm}{Mit Beschreibung und Label}{fig:caption-label}
+\makefig{images/logo-right.png}[height=2cm][Mit Beschreibung und Label][fig:caption-label]
 
 \subsection{\texttt vardef}
 \begin{listing}
@@ -61,16 +61,16 @@ $$e^{i*\pi} = -1$$
 
 \begin{code}[firstnumber=last]{tex}
 \begin{vardef}
-    \addvardef{$e$}{Eulersche Zahl}
-    \addvardef{$\pi$}{Kreiszahl}
-    \addvardef{$i$}{Imagin\"are Einheit}
+    \addvar{$e$}{Eulersche Zahl}
+    \addvar{$\pi$}{Kreiszahl}
+    \addvar{$i$}{Imagin\"are Einheit}
 \end{vardef}
 \end{code}
 
 \begin{vardef}
-    \addvardef{$e$}{Eulersche Zahl}
-    \addvardef{$\pi$}{Kreiszahl}
-    \addvardef{$i$}{Imaginäre Einheit}
+    \addvar{$e$}{Eulersche Zahl}
+    \addvar{$\pi$}{Kreiszahl}
+    \addvar{$i$}{Imaginäre Einheit}
 \end{vardef}
 
 \caption{\texttt vardef}

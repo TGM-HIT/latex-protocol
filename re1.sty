@@ -1,0 +1,230 @@
+% ======================= %
+% :: re1/LaTeX package :: %
+% ======================= %
+%
+% A LaTeX package providing common settings, makros and imports for various documents.
+% Thanks to @chro and @mborko for the previous templates and their support!
+%
+% @author   Markus Reichl <markus@re1.at> 
+% @version  2018-06-15
+% @url      https://github.com/re1/latex
+%
+% Copyright 2018 Markus Reichl
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+% associated documentation files (the "Software"), to deal in the Software without restriction,
+% including without limitation the rights to use, copy, modify, merge, publish, distribute,
+% sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is 
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all copies or 
+% substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT 
+% NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+% NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
+% DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{re1}[2018/06/15 re1/LaTeX]
+
+
+% ------------- %
+% :: Options :: %
+% ------------- %
+\newif\ifen\enfalse             	% English language
+\DeclareOption{en}{\entrue}
+\newif\iflandscape\landscapefalse	% Landscape orientation
+\DeclareOption{landscape}{\landscapetrue\PassOptionsToClass{landscape}{article}}
+\newif\ifminted\mintedfalse			% Minted for code listings
+\DeclareOption{minted}{\mintedtrue}
+\newif\ifnatbib\natbibfalse			% NatBib as bibliography backend
+\DeclareOption{natbib}{\bibtrue\natbibtrue}
+\newif\ifbib\bibtrue                % Do not except bibliography
+\DeclareOption{nobib}{\bibfalse}
+\newif\ifcolor\colortrue            % No coloured links
+\DeclareOption{nocolor}{\colorfalse}
+\newif\ifglo\glotrue                % Do not except glossaries
+\DeclareOption{noglo}{\glofalse}
+\newif\iftitle\titletrue            % No title page
+\DeclareOption{notitle}{\titlefalse}
+\newif\iftoc\toctrue                % No table of contents
+\DeclareOption{notoc}{\tocfalse}
+\newif\ifparskip\parskipfalse       % Skip a line instead of indenting after blank line
+\DeclareOption{parskip}{\parskiptrue}
+\newif\ifsans\sansfalse          	% Sans-serif fonts
+\DeclareOption{sans}{\sanstrue}
+% Pass options
+\ProcessOptions\relax
+
+
+% -------------- %
+% :: Packages :: %
+% -------------- %
+% Require landscape geometry and use smaller margins
+\iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
+\else			\RequirePackage{a4wide, geometry}\fi
+% Font settings, language support and symbols
+\RequirePackage[T1]{fontenc}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage{ccicons, csquotes, amssymb, mathtools, microtype}
+% Language
+\ifen 	\RequirePackage[ngerman, english]{babel}
+\else 	\RequirePackage[english, ngerman]{babel}\fi
+% Additional content, commands and settings
+\RequirePackage{fancyhdr, float, multicol, multirow, titling}
+\RequirePackage[marginal, norule, perpage]{footmisc}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{hyperref, url, pageslts}
+\RequirePackage{outlines, enumitem}
+\RequirePackage{booktabs, tabularx}
+\RequirePackage{graphicx, subcaption}
+\RequirePackage[font=small]{caption}
+\RequirePackage{accsupp}    % [1]
+\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
+\RequirePackage[figure,table,listing]{totalcount}
+\RequirePackage{xparse}     % Easier creation of commands with arguments
+% Skip lines instead of indents after a blank line
+\ifparskip\RequirePackage{parskip}\fi
+% Glossaries
+\ifglo\makeglossaries\fi
+% Bibliography
+\ifbib  \ifnatbib\RequirePackage{natbib}
+        \else\RequirePackage[backend=bibtex]{biblatex}\fi\fi
+
+\ifminted\RequirePackage[newfloat]{minted}  % Code listings
+\else\RequirePackage{listing}               % Already defined by minted itself
+     \RequirePackage{listingsutf8}\fi       % UTF-8 Input support for listings
+
+
+% --------------- %
+% :: Variables :: %
+% --------------- %
+
+% :: Colours :: %
+% Colour scheme: https://color.adobe.com/My-Color-Theme-color-theme-10823709 
+\definecolor{Lightest}{HTML}{fafafa}
+\definecolor{Lighter}{HTML}{f8b195}
+\definecolor{Light}{HTML}{c06c84}
+\definecolor{Dark}{HTML}{f67280}
+\definecolor{Darker}{HTML}{6c5b7b}
+\definecolor{Base}{HTML}{355c7d}
+
+% ------------------- %
+% :: Configuration :: %
+% ------------------- %
+
+% :: Listings :: %
+\ifminted							% Configure minted
+    \floatplacement{listing}{H} 	% Override default listing float
+    \usemintedstyle{tango}			% autumn, rainbow_dash, tango, trac
+    \setminted{ fontsize=\small,
+                linenos=true,
+                breakanywhere=true,
+                breaklines=true,
+                framesep=2mm,
+                tabsize=4}
+    % [1] Avoid copying line numbers on listings
+    \renewcommand\theFancyVerbLine{
+        \BeginAccSupp{method=escape,ActualText={}}
+        {\rmfamily\tiny\arabic{FancyVerbLine}}
+        \EndAccSupp{}
+    }
+    % Change listings for German users
+    \ifen\else\SetupFloatingEnvironment{listing}{
+    	listname=Auflistungsverzeichnis,name=Auflistung
+    }\fi
+\else\IfFileExists{.lst.tex}{\input{.lst}}{}\fi % Load listings config if exists
+
+% :: Hyperlinks :: %
+\ifcolor\else\hypersetup{breaklinks=true, colorlinks=false, % Remove colours
+                    	 linkcolor=Black, urlcolor=Black, citecolor=Black}\fi
+
+% :: References :: %
+% Add glossary / bibliography entries to preamble if they exist
+\IfFileExists{glossaries.tex}{\input{glossaries}\makeglossaries}{}
+\IfFileExists{bibliography.bib}{\addbibresource{bibliography}}{}
+
+% :: Hacks :: %
+\DisableLigatures[f]{encoding=T1}               % Disable font ligatures
+\renewcommand{\footrulewidth}{\headrulewidth}   % Adjust foot rule width (no explicit rule)
+\def\arraystretch{1.5}      				    % Increase table cell spacing
+\floatplacement{table}{H}   				    % Adjust default table float
+\floatplacement{figure}{H}  				    % Adjust default figure float
+\newcolumntype{Y}{p{.5\textwidth}}  		    % Half page TabularX column
+\renewcommand\thefootnote{\Roman{footnote}}	    % Roman footnotes
+
+
+% ------------ %
+% :: Macros :: %
+% ------------ %
+
+% :: Basic centered figure :: %
+% \makefig{path}{arguments}{caption}{label}
+\NewDocumentCommand\makefig{mooo}{
+    \begin{figure}[H]
+        \centering
+        \IfNoValueTF{#2}{\includegraphics{#1}}
+                        {\includegraphics[#2]{#1}}
+        \IfNoValueF{#3}{\caption{#3}}
+        \IfNoValueF{#4}{\label{#4}}
+    \end{figure}
+}
+
+% :: Math variable declaration :: %
+% \begin{vardef} or \begin{vardef}* for 4 columns
+\NewDocumentEnvironment{vardef}{s}{
+    \begin{center}
+    \IfBooleanTF{#1}{\begin{tabular}{l l l l}}
+                    {\begin{tabular}{l l l}}
+}{\end{tabular}\end{center}}
+% \addvar{symbol}{definition}[unit]
+\NewDocumentCommand\addvar{mmo}{
+    {#1} & \dots & {#2} \IfNoValueF{#3}{& #3}\\}
+
+% :: Code environments :: %
+% Extra % is used as a linefix for the code interpreter
+\ifminted   % Minted goes here
+    \newcommand\setcode[1]{\setminted{#1}}  % Code settings
+    \newenvironment{code}[2][]{             % Code environment
+        \VerbatimEnvironment%
+        \begin{minted}[#1]{#2}%
+    }{  \end{minted}}
+
+    \newcommand\codeinline{\mintinline}     % Inline code
+    \newcommand\codein{\codeinline}     	% Shorter command
+    \newcommand\inputcode{\inputminted}		% Input code
+\else       % Listings goes here
+    \newcommand\setcode[1]{\lstset{#1}}                         % Code settings
+    \lstnewenvironment{code}[2][]{\lstset{language={#2},#1}}{}  % Code environment
+
+    \newcommand\codeinline[3][]{\lstinline[language=#2,#1]\relax#3\relax}   % Inline code
+    \newcommand\codein{\codeinline}                                     	% Shorter command
+    \newcommand\inputcode[3][]{\lstinputlisting[language=#2,#1]{\detokenize{#3}}}   % Input code
+\fi
+
+% :: Begin Document :: %
+% Add common commands at the beginning of the document
+\AtBeginDocument{
+    \pagenumbering{arabic}                      % Required by pageslts
+    \iftitle 	\newgeometry{left=1.25in, right=1.25in, top=.75in, bottom=1.75in}
+    			\thispagestyle{empty}\maketitle % Print title on a clean page
+    			\restoregeometry\fi 		    % Restore geometry
+    \iftoc\tableofcontents\glsresetall\fi       % Table of contents
+}
+
+% :: End Document :: %
+% Add common commands at the end of the document
+\AtEndDocument{
+    \ifglo\printglossaries\fi 				% List used glossary entries
+    \ifbib 	\ifnatbib\bibliography{bib} 	% List bibliography entries with NatBib
+    \else 	\ifen\printbibliography[heading=bibintoc]
+            \else\printbibliography[heading=bibintoc, title=Literaturverzeichnis]\fi\fi
+    % List lists if not empty
+    \iftotalfigures\listoffigures\fi
+    \iftotaltables\listoftables\fi
+    \iftotallistings\listoflistings\fi
+}
+
+\endinput   % Always has to be the last command!
