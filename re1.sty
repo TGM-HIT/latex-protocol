@@ -6,7 +6,7 @@
 % Thanks to @chro and @mborko for the previous templates and their support!
 %
 % @author   Markus Reichl <markus@re1.at> 
-% @version  2018-06-15
+% @version  2018-06-29
 % @url      https://github.com/re1/latex
 %
 % Copyright 2018 Markus Reichl
@@ -33,14 +33,16 @@
 % ------------- %
 % :: Options :: %
 % ------------- %
+\newif\ifbibtex\bibtexfalse         % BibTeX bibliography backend
+\DeclareOption{bibtex}{\bibtextrue}
 \newif\ifen\enfalse             	% English language
 \DeclareOption{en}{\entrue}
 \newif\iflandscape\landscapefalse	% Landscape orientation
 \DeclareOption{landscape}{\landscapetrue\PassOptionsToClass{landscape}{article}}
 \newif\ifminted\mintedfalse			% Minted for code listings
 \DeclareOption{minted}{\mintedtrue}
-\newif\ifnatbib\natbibfalse			% NatBib as bibliography backend
-\DeclareOption{natbib}{\bibtrue\natbibtrue}
+\newif\ifnatbib\natbibfalse			% NatBib bibliography backend
+\DeclareOption{natbib}{\natbibtrue}
 \newif\ifbib\bibtrue                % Do not except bibliography
 \DeclareOption{nobib}{\bibfalse}
 \newif\ifcolor\colortrue            % No coloured links
@@ -90,12 +92,13 @@
 % Glossaries
 \ifglo\makeglossaries\fi
 % Bibliography
-\ifbib  \ifnatbib\RequirePackage{natbib}
-        \else\RequirePackage[backend=bibtex]{biblatex}\fi\fi
+\ifbib  \ifnatbib   \RequirePackage{natbib}\fi
+        \ifbibtex   \RequirePackage[backend=bibtex]{biblatex}
+        \else       \RequirePackage{biblatex}\fi
 
-\ifminted\RequirePackage[newfloat]{minted}  % Code listings
-\else\RequirePackage{listing}               % Already defined by minted itself
-     \RequirePackage{listingsutf8}\fi       % UTF-8 Input support for listings
+\ifminted   \RequirePackage[newfloat]{minted}   % Code listings
+\else       \RequirePackage{listing}            % Already defined by minted itself
+            \RequirePackage{listingsutf8}\fi    % UTF-8 Input support for listings
 
 
 % --------------- %

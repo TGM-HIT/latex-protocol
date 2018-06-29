@@ -6,11 +6,12 @@
 % Thanks to @chro and @mborko for the previous templates and support!
 %
 % @author   Markus Reichl <markus@re1.at> 
-% @version  2018-05-15
-% @url      https://github.com/tgm-hit/latex-protocol
+% @version  2018-05-29
+% @url      https://github.com/TGM-HIT/latex-protocol
 
 
 \ProvidesClass{protocol}
+
 % ------------- %
 % :: Options :: %
 % ------------- %
