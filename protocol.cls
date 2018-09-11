@@ -46,8 +46,9 @@
 \ProcessOptions\relax
 % Load article class
 \IfFileExists{crimson.sty}{
-    \LoadClass[a4paper,11pt]{article}   % Crimson
-}{  \LoadClass[a4paper,10pt]{article}}  % Default
+    \iffonts\LoadClass[a4paper,11pt]{article}   % Crimson
+    \else\LoadClass[a4paper, 10pt]{article}\fi  % Default
+}{  \LoadClass[a4paper,10pt]{article}}          % Default
 
 
 % -------------- %
