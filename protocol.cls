@@ -6,7 +6,7 @@
 % Thanks to @chro and @mborko for the previous templates and support!
 %
 % @author   Markus Reichl <markus@re1.at> 
-% @version  2018-04-16
+% @version  2018-09-10
 % @url      https://github.com/tgm-hit/latex-protocol
 
 
@@ -61,10 +61,13 @@
 % Require landscape geometry and use smaller margins
 \iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
 \else			\RequirePackage{a4wide, geometry}\fi
+% Make ccicons optional to support smaller TeX distrubtions
+\newif\ifccicons\cciconstrue
+\IfFileExists{ccicons.sty}{\RequirePackage{ccicons}}{\cciconsfalse}
 % Font settings, language support and symbols
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
-\RequirePackage{ccicons, csquotes, amssymb, mathtools}
+\RequirePackage{csquotes, amssymb, mathtools}
 % Language
 \ifen 	\RequirePackage[ngerman, english]{babel}
 \else 	\RequirePackage[english, ngerman]{babel}\fi
@@ -161,7 +164,7 @@
 \fancyhead[L]{\small \thetitle}
 \fancyhead[C]{\small \@mysubject}
 \fancyhead[R]{\small \@date}
-\fancyfoot[L]{\small \theauthor~{\footnotesize\ccby}}
+\fancyfoot[L]{\small \theauthor~{\ifccicons\footnotesize\ccby\fi}}
 \fancyfoot[C]{\small \@mycourse}
 \fancyfoot[R]{\small \thepage~/~{\lastpageref*{VeryLastPage}}}
 \makeatother
