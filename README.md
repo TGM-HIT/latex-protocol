@@ -8,12 +8,24 @@ cd protocol
 ```
 
 **Contents**
+- [Dependencies](#dependencies)
 - [Usage](#usage)
 	- [LaTeX](#latex)
 	- [TexStudio](#texstudio)
 	- [ShareLatex](#sharelatex)
 - [Options](#options)
 - [Variables](#variables)
+
+## Dependencies
+For local compilation a TeX distribution is required. Both [TeX Live](https://tug.org/texlive/) and [MiKTeX](https://miktex.org/) are fully supported. The [compilation script](https://github.com/TGM-HIT/latex-protocol/blob/master/make) requires [Python](https://www.python.org) 3.
+
+Some features might depend on packages which are not installed by default!
+A growing list of optional dependencies can be found [here](https://github.com/TGM-HIT/latex-protocol/wiki/Dependencies).
+
+**Arch Linux**
+``` sh
+sudo pacman -S texlive-most python-pygments
+```
 
 ## Usage
 With Python 3 and LaTeX installed you can easily compile your project using the `make` script which simplifies the compilation progress, handles multiple source files and removes unnecessary files.
