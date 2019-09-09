@@ -53,10 +53,10 @@ Of course you can also add the `maketex` script as a user command but you might 
 python maketex -lm | txs:///view-pdf-internal --embedded
 ```
 
-### ShareLaTex
-[ShareLaTex](https://www.sharelatex.com/project) is a popular online latex editor and is also fully supported by this template. Just download the archived repository or latest release and upload as a new project.
+### Overleaf
+[Overleaf](https://www.overleaf.com/project) is a popular online latex editor and is also fully supported by this template. Just download the archived repository or latest release and upload as a new project.
 
-![ShareLaTex usage](https://media.giphy.com/media/DNwRWMqKcwnE92liHn/giphy.gif)
+![Overleaf usage](images/Overleaf-Intro.gif)
 
 ## Options
 Option | Result
