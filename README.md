@@ -5,23 +5,40 @@
 ```sh
 git clone git@github.com:tgm-hit/latex-protocol.git protocol
 cd protocol
-./make
+./maketex
 ```
 
 **Contents**
 
--   [Usage](#usage) - [LaTeX](#latex) - [TexStudio](#texstudio) - [ShareLatex](#sharelatex)
--   [Options](#options)
--   [Variables](#variables)
+- [Dependencies](#dependencies)
+- [Usage](#usage)
+  - [LaTeX](#latex)
+  - [TexStudio](#texstudio)
+  - [ShareLatex](#sharelatex)
+- [Options](#options)
+- [Variables](#variables)
+
+## Dependencies
+
+For local compilation a TeX distribution is required. Both [TeX Live](https://tug.org/texlive/) and [MiKTeX](https://miktex.org/) are fully supported. The [compilation script](https://github.com/TGM-HIT/latex-protocol/blob/master/maketex) requires [Python](https://www.python.org) 3.
+
+Some features might depend on packages which are not installed by default!
+A growing list of optional dependencies can be found [here](https://github.com/TGM-HIT/latex-protocol/wiki/Dependencies).
+
+**Arch Linux**
+
+```sh
+sudo pacman -S texlive-most python-pygments
+```
 
 ## Usage
 
-With Python 3 and LaTeX installed you can easily compile your project using the `make` script which simplifies the compilation progress, handles multiple source files and removes unnecessary files.
-For most use-cases you only have to run `./make` which compiles the `main.tex` file using `pdflatex` while looking for bibliography and glossary entries.
+With Python 3 and LaTeX installed you can easily compile your project using the `maketex` script which simplifies the compilation progress, handles multiple source files and removes unnecessary files.
+For most use-cases you only have to run `./maketex` which compiles the `main.tex` file using `pdflatex` while looking for bibliography and glossary entries.
 
 ### Latex
 
-If (for some reason) you do not want to depend on the `make` script you can also use `pdflatex`, `makeglossaries` and `bibtex` from the shell.
+If (for some reason) you do not want to depend on the `maketex` script you can also use `pdflatex`, `makeglossaries` and `bibtex` from the shell.
 
 ```sh
 pdflatex -shell-escape main	# Initial compilation
@@ -40,10 +57,10 @@ In TexStudio a custom command can be added under `Options` &rarr; `Configure Tex
 pdflatex -shell-escape -interaction=nonstopmode % | txs:///makeglossaries | pdflatex -shell-escape -interaction=nonstopmode % | txs:///bibtex | pdflatex -shell-escape -interaction=nonstopmode % | pdflatex -shell-escape -interaction=nonstopmode % | txs:///view-pdf-internal --embedded
 ```
 
-Of course you can also add the `make` script as a user command but you might want to set `-lm` so TexStudio can find your log files and minted cache after cleanup.
+Of course you can also add the `maketex` script as a user command but you might want to set `-lm` so TexStudio can find your log files and minted cache after cleanup.
 
 ```sh
-python make -lm | txs:///view-pdf-internal --embedded
+python maketex -lm | txs:///view-pdf-internal --embedded
 ```
 
 ### ShareLaTex
