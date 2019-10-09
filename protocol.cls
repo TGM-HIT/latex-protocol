@@ -5,7 +5,7 @@
 % LaTeX class for protocols designed for the HIT department at TGM Vienna.
 % Thanks to @chro and @mborko for the previous templates and support!
 %
-% @author   Markus Reichl <markus@re1.at> 
+% @author   Markus Reichl <markus@re1.at>
 % @version  2018-05-29
 % @url      https://github.com/TGM-HIT/latex-protocol
 
@@ -36,7 +36,7 @@
 % -------------- %
 % :: Packages :: %
 % -------------- %
-\RequirePackage{re1}
+\RequirePackage{tgm}
 
 \iffonts	% Load correct fonts when available
 	\ifsans	\renewcommand*\familydefault{\sfdefault}
@@ -80,7 +80,7 @@
 \fancyhead[L]{\small \thetitle}
 \fancyhead[C]{\small \@mysubject}
 \fancyhead[R]{\small \@date}
-\fancyfoot[L]{\small \theauthor~{\footnotesize\ccby}}
+\fancyfoot[L]{\small \theauthor~{\ifccicons\footnotesize\ccby\fi}}
 \fancyfoot[C]{\small \@mycourse}
 \fancyfoot[R]{\small \thepage~/~{\lastpageref*{VeryLastPage}}}
 \makeatother
