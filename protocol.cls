@@ -5,16 +5,9 @@
 % LaTeX class for protocols designed for the HIT department at TGM Vienna.
 % Thanks to @chro and @mborko for the previous templates and support!
 %
-<<<<<<< HEAD
-% @author   Markus Reichl <markus@re1.at>
-% @version  2018-05-29
-% @url      https://github.com/TGM-HIT/latex-protocol
-=======
-% @author   Markus Reichl <markus@re1.at> 
+% @author   Markus Reichl <markus@re1.dev>
 % @version  2018-09-10
-% @url      https://github.com/tgm-hit/latex-protocol
->>>>>>> master
-
+% @url      https://github.com/TGM-HIT/latex-protocol
 
 \ProvidesClass{protocol}
 
@@ -23,7 +16,7 @@
 % ------------- %
 \DeclareOption{landscape}{          % Pass landscape option to article and re1
     \PassOptionsToClass{\CurrentOption}{article}
-    \PassOptionsToPackage{\CurrentOption}{re1}}
+    \PassOptionsToPackage{\CurrentOption}{tgm}}
 \newif\iffonts\fontstrue            % No additional fonts
 \DeclareOption{nofonts}{\fontsfalse}
 \newif\iflogos\logostrue            % No logos
@@ -50,42 +43,6 @@
 	\else	\IfFileExists{crimson.sty}{\RequirePackage{crimson}}{}\fi
     \IfFileExists{FiraMono.sty}{\RequirePackage[scale=0.5]{FiraSans}}{}
 \fi
-<<<<<<< HEAD
-=======
-% Require landscape geometry and use smaller margins
-\iflandscape	\RequirePackage[landscape,margin=1in]{geometry}
-\else			\RequirePackage{a4wide, geometry}\fi
-% Make ccicons optional to support smaller TeX distrubtions
-\newif\ifccicons\cciconstrue
-\IfFileExists{ccicons.sty}{\RequirePackage{ccicons}}{\cciconsfalse}
-% Font settings, language support and symbols
-\RequirePackage[T1]{fontenc}
-\RequirePackage[utf8]{inputenc}
-\RequirePackage{csquotes, amssymb, mathtools}
-% Language
-\ifen 	\RequirePackage[ngerman, english]{babel}
-\else 	\RequirePackage[english, ngerman]{babel}\fi
-% Additional content, commands and settings
-\RequirePackage{fancyhdr, float, multicol, multirow, titling}
-\RequirePackage[marginal, norule, perpage]{footmisc}
-\RequirePackage[dvipsnames]{xcolor}
-\RequirePackage{hyperref, url, pageslts}
-\RequirePackage{outlines, enumitem}
-\RequirePackage{booktabs, tabularx}
-\RequirePackage{graphicx, subcaption}
-\RequirePackage[font=small]{caption}
-\RequirePackage{accsupp}    % [1]
-% Count list items for lists
-\RequirePackage[figure,table,listing]{totalcount}
-% Skip lines instead of indents after a blank line
-\ifparskip\RequirePackage{parskip}\fi
-
-% Glossaries
-\ifglo 	\RequirePackage[acronym, xindy, toc, nohypertypes={acronym,notation}]{glossaries}
-		\makeglossaries\fi
->>>>>>> master
-
-
 
 % --------------- %
 % :: Variables :: %
