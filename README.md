@@ -59,6 +59,12 @@ python maketex -lm | txs:///view-pdf-internal --embedded
 ![Overleaf usage](images/Overleaf-Intro.gif)
 
 ## Options
+
+Options are added to the `\documentclass` command usually found in `main.tex`.
+```latex
+\documentclass[<option1>,<option2>,...]{protocol}
+```
+
 Option | Result
 ------ | ------
 `en` | Set main document language to english
@@ -76,7 +82,8 @@ Option | Result
 `sans` | Load sans-serif fonts
 
 ## Variables
-Variables can be set as commands like
+
+Variables are set as commands with their parameter being the variable value.
 ```tex
 \myvariable{value}
 ```
