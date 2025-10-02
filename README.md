@@ -24,7 +24,7 @@ A growing list of optional dependencies can be found [here](https://github.com/T
 
 **Arch Linux**
 ``` sh
-sudo pacman -S texlive-most python-pygments
+sudo pacman -S python-pygments texlive-meta texlive-langgerman texlive-langenglish texlive-langother texlive-fontsextra
 ```
 
 ## Usage
